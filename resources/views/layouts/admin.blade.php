@@ -418,7 +418,7 @@ desired effect
 <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/datatables.bootstrap.js"></script>
-<script src="https://datatables.yajrabox.com/js/handlebars.js"></script>  
+<script src="https://datatables.yajrabox.com/js/handlebars.js"></script>
 
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

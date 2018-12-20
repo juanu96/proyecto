@@ -54,5 +54,7 @@
     </div>
 </div>
 @stop
-
-@include('work_area.index')
+    {!!Form::open(array('url'=>'work_area','method'=>'POST','autocomplete'=>'off'))!!}
+    {!!Form::token()!!}
+    @include('work_area.index')
+    {!!Form::close()!!}

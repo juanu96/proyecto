@@ -9,11 +9,13 @@ use Carbon\Carbon;
 use DataTables;
 use Redirect;
 use DB;
+
+
 class work_areaController extends Controller
 {
     public function index(Request $request)
     {
-       //
+        //
     } 
 
    
@@ -24,9 +26,11 @@ class work_areaController extends Controller
 
     
     public function store(Work_areaRequest $request)
-    {
-        //  
-    }
+    {          
+             $workarea = work_area::create($request->all()); 
+             $workarea->save();   
+             return response()->json($workarea);    
+     }
 
   
     public function show($id)
@@ -49,6 +53,8 @@ class work_areaController extends Controller
 
     public function destroy($id)
     {
-        //
+        work_area::find($id)->delete();
+
+        return response()->json(['done']);
     }
 }
