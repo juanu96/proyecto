@@ -8,7 +8,9 @@ use App\Work_area as work_area;
 use Carbon\Carbon;
 use DataTables;
 use Redirect;
+use response;
 use DB;
+use Laracasts\Flash\Flash;
 
 
 class work_areaController extends Controller
@@ -27,11 +29,18 @@ class work_areaController extends Controller
     
     public function store(Work_areaRequest $request)
     {          
-             $workarea = work_area::create($request->all()); 
-             $workarea->save();   
-             return response()->json($workarea);    
-     }
+             /* $work_area = work_area::create($request->all()); 
+             $work_area->save();
+             return response()->json(['success'=>'Data is successfully added']);  */  
 
+             $workarea = new work_area;
+             $workarea->name = $request->name;
+             $workarea->description = $request->description;
+             $workarea->save();
+             return response()->json($workarea);
+
+     }
+ 
   
     public function show($id)
     {

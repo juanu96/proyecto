@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //use Iluminate\Support\Facades\Redirect;
 use App\Http\Requests\WorkersRequest;
+use App\Http\Requests\Work_areaRequest;
 use \App\Workers as Worker;
 use App\Work_area as work_area; 
 use Carbon\Carbon;
@@ -91,6 +92,21 @@ class WorkersController extends Controller
         Worker::destroy($id);
 
         return redirect::to('worker');
+
+    }
+
+    public function savewa(Work_areaRequest $request)
+    {
+        if($request->ajax())
+        {
+            $work_area = work_area::create($request->all()); 
+            $work_area->save();
+            return response()->json(['data'=>'Data is successfully added', $work_area]);
+        }
+        else
+        {
+            dd("no se esta usando ajax");
+        }
 
     }
 }

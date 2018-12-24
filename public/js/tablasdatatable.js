@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    listarworkarea();
+});  
+  
+  
   $(function() {
         $('#Worker-table').DataTable({
           language: {
@@ -89,39 +94,32 @@
             $("#descriptionAT").val(description);          
         });
 
-        $(".guardarAT").click(function(){
-            $( '#envioAT' ).on( 'submit', function(e) {
+        //funcion guardar work_area
+        $("#guardarAT").click(function(e){            
                 e.preventDefault(); 
+
                 var nombre = $('#nameAT').val();
                 var descripción = $('#descriptionAT').val();
                 $.ajax({
                     type: "POST",
-                    url:'WorkersController',
-                    data: {name:nombre, description:descripción}              
+                    url:'/worker/savewa',
+                    data: {
+                        "_token": $('#token').val(),   
+                        'name': nombre,
+                        'description': descripción,
+                    },
+                    success: function(data){
+                        if((data.errors)){
+                            alert("hubo un error");
+                        }
+                        else{
+                            alert(data.success);
+                        }
+                    }              
                 });
             });
-            
-        }); 
 
-        listarworkarea();
-            function listarworkarea() {;           
-            var URL ='worker';
-            $.ajax({
-                url: URL,
-                type: 'POST',
-                DataType: 'json',
-                success: function(data) {
-                var valor = '<tr>' +
-                    '<td>' + datawa.id + '</td>' +
-                    '<td>' + datawa.name + '</td>' +
-                    '<td>' + datawa.description + '</td>' +
-                    '<td><button class="btn btn-danger fa fa-trash"></button>&nbsp;&nbsp;<button class="btn btn-warning fa fa-pencil"></button></td>' +
-                    '</tr>';
-                $("#tbodyworkarea").html(valor);
-                                    
-                }
-            });
-        }
+       
 
         
         

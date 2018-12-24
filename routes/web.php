@@ -23,5 +23,7 @@ Route::resource('worker','WorkersController');
 
 Route::resource('work_area', 'work_areaController');
 
+Route::POST('worker/savewa','WorkersController@savewa');
+
 
 

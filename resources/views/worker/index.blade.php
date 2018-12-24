@@ -54,7 +54,9 @@
     </div>
 </div>
 @stop
-    {!!Form::open(array('url'=>'work_area','method'=>'POST','autocomplete'=>'off'))!!}
-    {!!Form::token()!!}
+
+    {{-- {!!Form::open()!!}
+    {!!Form::token()!!} --}}
     @include('work_area.index')
-    {!!Form::close()!!}
+    {{-- {!!Form::close()!!} --}}
+
