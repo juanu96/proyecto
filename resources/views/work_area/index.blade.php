@@ -17,11 +17,10 @@
                 @endforeach 
             </ul>        
         </div>
-        @endif      
-        {!!Form::open()!!}
-        {!!Form::token()!!}
-            <form>
+        @endif 
+            <form id="workareaform">
                 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id" id="idAT">
               <div class="form-group">
                   <label for="nombre">Nombre</label>
                   <input type="text" name="name" class="form-control" id="nameAT" placeholder="Nombre" value="{{ old('name') }}">
@@ -36,11 +35,10 @@
                   <button class="btn btn-danger hide" type="reset" id="cancelarAT">Cancelar</button>       
               </div>
             </form>
-        {!!Form::close()!!}
         </div> 
       </div>
       <div class="modal-body prueba" >
-        <table class="table table-striped tabled-bordered table-condensed table-hover" id="users-table">
+        <table class="table table-striped tabled-bordered table-condensed table-hover" id="tbodywa" >
                     <thead>
                         <tr>
                             <th class="text-left">Id</th>
@@ -52,7 +50,7 @@
                     {{ csrf_field() }}
                    @foreach ($datawa as $itemwa)
                       <tbody>
-                         <tr class="items">
+                      <tr data-item="{{$itemwa->id}}">
                             <td>{{$itemwa->id}}</td>
                             <td>{{$itemwa->name}}</td>
                             <td>{{$itemwa->description}}</td>

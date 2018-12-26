@@ -1,7 +1,3 @@
-$( document ).ready(function() {
-    listarworkarea();
-});  
-  
   
   $(function() {
         $('#Worker-table').DataTable({
@@ -95,30 +91,65 @@ $( document ).ready(function() {
         });
 
         //funcion guardar work_area
-        $("#guardarAT").click(function(e){            
+        $("#guardarAT").on("click", function(e){            
                 e.preventDefault(); 
 
                 var nombre = $('#nameAT').val();
                 var descripción = $('#descriptionAT').val();
                 $.ajax({
                     type: "POST",
-                    url:'/worker/savewa',
+                    url:'/work_area',
+                    dataType: "json",
                     data: {
                         "_token": $('#token').val(),   
                         'name': nombre,
                         'description': descripción,
                     },
                     success: function(data){
+                        console.log(data);
                         if((data.errors)){
-                            alert("hubo un error");
+                            alert("No se pudo agregar correctamente.");
                         }
                         else{
-                            alert(data.success);
+                            alert("Area de trabajo: "+nombre+", agregada correctamente.");
+                            $("#formularioAT")[0].reset();
+                            var	row = '';                            
+                                      console.log(data.data);     
+                                    var value = data.data;   
+                                  row ='<tr>'+
+                                  '<td>'+value.id+'</td>'+
+                                  '<td>'+value.name+'</td>' +
+                                  '<td>'+value.description+'</td>' +
+                                  '<td>'+
+                                  '<a href="#" class="glyphicon glyphicon-pencil editarat_1" aria-hidden="true" name="editar" data-id="'+value.id+'" data-name="'+value.name+'"></a>'+
+                                  '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
+                                  '</td>'+
+                                  '</tr>';
+                                  $("#tbodywa tr:last").after(row);                                                          
+                                                 
                         }
                     }              
-                });
+                });                  
             });
 
+            $("#editarAT").on("click", function(){  
+                var id = $('#idAT').val();
+                var name = $('#nameAT').val();
+                var description = $('#descriptionAT').val();
+                $.ajax({
+                    type:"PUT",
+                    url:'/work_area/'+id,
+                    dataType: "json",
+                    data: {
+                        "_token": $('#token').val(),   
+                        'name': name,
+                        'description': description,
+                    },
+                         //recorda que tienes que agregar de nuevo el editado a la tabla         
+                });                 
+                
+                
+            });
        
 
         

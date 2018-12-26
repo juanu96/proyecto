@@ -15,48 +15,30 @@ use Laracasts\Flash\Flash;
 
 class work_areaController extends Controller
 {
-    public function index(Request $request)
-    {
-        //
-    } 
-
-   
-    public function create()
-    {
-        //
-    }
-
-    
+     
     public function store(Work_areaRequest $request)
     {          
-             /* $work_area = work_area::create($request->all()); 
-             $work_area->save();
-             return response()->json(['success'=>'Data is successfully added']);  */  
 
-             $workarea = new work_area;
-             $workarea->name = $request->name;
-             $workarea->description = $request->description;
-             $workarea->save();
-             return response()->json($workarea);
+             if($request->ajax())
+        {
+            $work_area = work_area::create($request->all()); 
+            $work_area->save();
+            //return response()->json(['data'=>'Data is successfully added',$data= $work_area]);
+            return response(['success' => true, 'message' => 'Area de trabajo agregada correctamente, id:' . $work_area->id, 'data' => $work_area], 201)
+                    ->header('Content-Type', 'text/plain');
+        }      
+
 
      }
  
-  
-    public function show($id)
+     public function update(Work_areaRequest $request, $id)
     {
-        //
-    }
-
- 
-    public function edit($id)
-    {
-        //return view("work_area.edit",["work_area"=>work_area::findOrFail($id)]); 
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
+        if($request->ajax())
+        {
+        $work_area = work_area::find($id)->update($request->all());
+        return response(['success' => true, 'message' => 'Area de trabajo actualizada correctamente, id:' . $work_area->id, 'data' => $work_area], 201)
+                    ->header('Content-Type', 'text/plain');
+        }
     }
 
 

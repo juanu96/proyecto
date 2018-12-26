@@ -94,19 +94,4 @@ class WorkersController extends Controller
         return redirect::to('worker');
 
     }
-
-    public function savewa(Work_areaRequest $request)
-    {
-        if($request->ajax())
-        {
-            $work_area = work_area::create($request->all()); 
-            $work_area->save();
-            return response()->json(['data'=>'Data is successfully added', $work_area]);
-        }
-        else
-        {
-            dd("no se esta usando ajax");
-        }
-
-    }
 }

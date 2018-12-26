@@ -21,10 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{asset('dist/css/skins/skin-blue.min.css')}}">
-  <!-- Data table -->
-  <link href="{{ asset('/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css">
+ 
   <!-- DataTables -->
-  <link href="{{ asset('/plugins/datatables/jquery.dataTables.css')}}" rel="stylesheet" type="text/css">
   <link href="https://datatables.yajrabox.com/css/datatables.bootstrap.css" rel="stylesheet">
 
 
@@ -410,10 +408,9 @@ desired effect
 <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-<script src="{{asset('js/tablasdatatable.js')}}"></script>
+<script src="{{asset('js/custom.js')}}"></script>
 
 <!-- Data table -->
-<script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="https://datatables.yajrabox.com/js/jquery.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/bootstrap.min.js"></script>
 <script src="https://datatables.yajrabox.com/js/jquery.dataTables.min.js"></script>
