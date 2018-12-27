@@ -31,7 +31,7 @@
               </div>
               <div class="form-group">
                   <button class="btn btn-primay" id="guardarAT" type="submit" >Guardar</button>
-                  <button class="btn btn-primay hide" type="btn" id="editarAT">Editar</button>     
+                  <button class="btn btn-primay hide" type="submit" id="editarAT">Editar</button>     
                   <button class="btn btn-danger hide" type="reset" id="cancelarAT">Cancelar</button>       
               </div>
             </form>
@@ -52,11 +52,11 @@
                       <tbody>
                       <tr data-item="{{$itemwa->id}}">
                             <td>{{$itemwa->id}}</td>
-                            <td>{{$itemwa->name}}</td>
-                            <td>{{$itemwa->description}}</td>
+                            <td class="waname">{{$itemwa->name}}</td>
+                            <td class="wadescription">{{$itemwa->description}}</td>
                             <td>
                               <a href="#" class="glyphicon glyphicon-pencil editarat_1 "aria-hidden="true" name="editar" data-id="{{$itemwa->id}}" data-name="{{$itemwa->name}}"></a>
-                              <a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemwa ->id}}" data-name="{{$itemwa->name}}"></a>
+                              <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemwa ->id}}" data-name="{{$itemwa->name}}"></a>
                             </td>                   
                         </tr> 
                     </tbody>

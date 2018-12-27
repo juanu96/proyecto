@@ -90,7 +90,7 @@
             $("#descriptionAT").val(description);          
         });
 
-        //funcion guardar work_area
+        //Metodo crear para areas de trabajo
         $("#guardarAT").on("click", function(e){            
                 e.preventDefault(); 
 
@@ -111,45 +111,85 @@
                             alert("No se pudo agregar correctamente.");
                         }
                         else{
-                            alert("Area de trabajo: "+nombre+", agregada correctamente.");
+                            alert("El area de trabajo: "+nombre+", se ha agregado correctamente.");
                             $("#formularioAT")[0].reset();
                             var	row = '';                            
-                                      console.log(data.data);     
-                                    var value = data.data;   
-                                  row ='<tr>'+
-                                  '<td>'+value.id+'</td>'+
-                                  '<td>'+value.name+'</td>' +
-                                  '<td>'+value.description+'</td>' +
-                                  '<td>'+
-                                  '<a href="#" class="glyphicon glyphicon-pencil editarat_1" aria-hidden="true" name="editar" data-id="'+value.id+'" data-name="'+value.name+'"></a>'+
-                                  '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
-                                  '</td>'+
-                                  '</tr>';
-                                  $("#tbodywa tr:last").after(row);                                                          
-                                                 
-                        }
-                    }              
-                });                  
-            });
-
-            $("#editarAT").on("click", function(){  
-                var id = $('#idAT').val();
+                                console.log(data.data);     
+                                var value = data.data;
+                                row ='<tr>'+
+                                '<td>'+value.id+'</td>'+
+                                '<td>'+value.name+'</td>' +
+                                '<td>'+value.description+'</td>' +
+                                '<td>'+
+                                '<a href="#" class="glyphicon glyphicon-pencil editarat_1" aria-hidden="true" name="editar" data-id="'+value.id+'" data-name="'+value.name+'"></a>'+
+                                '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
+                                '</td>'+
+                                '</tr>';
+                                $("#tbodywa tr:last").after(row);                                                                                                
+                            }
+                        }              
+                    });                  
+                });
+            //Metodo actualizar para areas de trabajo
+            $("#editarAT").on("click", function(e){
+                e.preventDefault(); 
                 var name = $('#nameAT').val();
                 var description = $('#descriptionAT').val();
-                $.ajax({
+                 $.ajax({
                     type:"PUT",
                     url:'/work_area/'+id,
                     dataType: "json",
                     data: {
-                        "_token": $('#token').val(),   
+                        "_token": $('#token').val(),
                         'name': name,
                         'description': description,
-                    },
-                         //recorda que tienes que agregar de nuevo el editado a la tabla         
-                });                 
-                
-                
-            });
+                    }, 
+                        success: function(data){
+                        console.log(data);
+                        if((data.errors)){
+                            alert("No se pudo actualizar correctamente.");
+                        }
+                        else{
+                            var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+                            console.log(data);
+                            alert("actualizado correctamente");
+                            $(data.find(".waname")).html(name);
+                            $(data.find(".wadescription")).html(description);
+                            $("#guardarAT").removeClass("hide");
+                            $("#editarAT").addClass("hide");
+                            $("#cancelarAT").addClass("hide");
+                            $("#formularioAT")[0].reset();                            
+                        }
+                    }
+                }); 
+             });
+
+            //Metodo eliminar para areas de trabajo
+            $(".eliminar_at").on("click", function(e){  
+                    e.preventDefault();
+                    var id = $(this).attr('data-id');
+                    var name = $(this).attr('data-name');
+                    $.ajax({
+                        type:'DELETE',
+                        url:'/work_area/'+id,
+                        data: {
+                            "_token": $('#token').val(),
+                        },
+                        success: function(data){
+                        console.log(data);
+                        if((data.errors)){
+                            alert("No se pudo eliminar correctamente.");
+                        }
+                        else{
+                        alert("El area de trabajo: "+name+", se ha eliminado correctamente.");
+                        var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+                        data.remove();
+                    }
+
+                }
+            });           
+        });
+       
        
 
         
