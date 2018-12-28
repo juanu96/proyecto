@@ -73,7 +73,8 @@
         </div>
         <div class="form-group">
             <button class="btn btn-primay" type="submit">Guardar</button>
-            <button class="btn btn-danger" type="reset">Cancelar</button>
+            <a href="worker"><button class="btn btn-danger" type="btn">Cancelar</button></a>
+            
         </div>
         {!!Form::close()!!}
     </div>

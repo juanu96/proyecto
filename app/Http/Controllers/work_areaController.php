@@ -23,7 +23,6 @@ class work_areaController extends Controller
         {
             $work_area = work_area::create($request->all()); 
             $work_area->save();
-            //return response()->json(['data'=>'Data is successfully added',$data= $work_area]);
             return response(['success' => true, 'message' => 'Area de trabajo agregada correctamente, id:' . $work_area->id, 'data' => $work_area], 201)
                     ->header('Content-Type', 'text/plain');
         }      

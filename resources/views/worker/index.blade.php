@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('content')
 <div class="row">
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
         <h3>Listado de Trabajadores <a href="worker/create"><button class="btn btn-success">Nuevo</button></a></h3>
@@ -8,9 +8,14 @@
     </div>
 </div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#areas_de_trabajo">Area de Trabajo</button>
+<div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#areas_de_trabajo">Area de Trabajo</button>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#puesto_de_trabajo">Puestos de Trabajo</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#puesto_de_trabajo">Puestos de Trabajo</button>
+                
+        </div>
+    </div>
 
 
 <div class="row">
@@ -58,5 +63,6 @@
     {{-- {!!Form::open()!!}
     {!!Form::token()!!} --}}
     @include('work_area.index')
+    @include('jobs_titles.index')
     {{-- {!!Form::close()!!} --}}
 

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request; 
 
 //use Iluminate\Support\Facades\Redirect;
-use App\Http\Requests\WorkersRequest;
 use App\Http\Requests\Work_areaRequest;
-use \App\Workers as Worker;
+use App\Http\Requests\WorkersRequest;
 use App\Work_area as work_area; 
+use App\job_titles as job_title;
+use App\Workers as Worker;
 use Carbon\Carbon;
 use DataTables;
 use Redirect;
@@ -24,8 +25,8 @@ class WorkersController extends Controller
         {
             $data=Worker::get();
             $datawa=work_area::get();
-
-            return view('worker.index',compact('data','datawa'));   
+            $datajt=job_title::get();            
+            return view('worker.index',compact('data','datawa','datajt'));   
         }
     }
 

@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => 'Secat<strong>BPO</strong>',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>S</b>-BPO',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,18 +108,21 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
+        'MENU DE NAVEGACIÓN',
         [
             'text' => 'Blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Pages',
+            'text'        => 'Trabajadores',
+            'url'         => 'worker',
+            'icon'        => 'user',
+        ],
+        [
+            'text'        => 'Otro',
             'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'icon'        => 'user',
         ],
         'ACCOUNT SETTINGS',
         [

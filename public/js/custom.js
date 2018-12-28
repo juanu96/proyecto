@@ -51,30 +51,25 @@
        
         
     });  
-        $("#cerrar").click(function(){
+        $(".cerrar").click(function(){
             $("#guardarAT").removeClass("hide");
             $("#editarAT").addClass("hide");
-            $("#cancelarAT").addClass("hide");
-            $("#formularioAT")[0].reset();            
-        });
+            $(".cancelar").addClass("hide");
+            $("#formularioAT")[0].reset(); 
+            $("#formulariojt")[0].reset();           
+        }); 
 
-        $("#btn-closeAT").click(function(){
+        $(".cancelar").click(function(){
             $("#guardarAT").removeClass("hide");
             $("#editarAT").addClass("hide");
-            $("#cancelarAT").addClass("hide");
-            $("#formularioAT")[0].reset();            
-        });
-
-        $("#cancelarAT").click(function(){
-            $("#guardarAT").removeClass("hide");
-            $("#editarAT").addClass("hide");
-            $("#cancelarAT").addClass("hide");
-            $("#formularioAT")[0].reset();            
+            $(".cancelar").addClass("hide");
+            $("#formularioAT")[0].reset();     
+            $("#formulariojt")[0].reset();       
         });        
         
         $(".editarat_1").click(function(){
             $("#editarAT").removeClass("hide");
-            $("#cancelarAT").removeClass("hide");
+            $(".cancelar").removeClass("hide");
             $("#guardarAT").addClass("hide"); 
             $(this).parents("tr").find("td:eq(0)").each(function(){
                 id=$(this).html();                
@@ -157,7 +152,7 @@
                             $(data.find(".wadescription")).html(description);
                             $("#guardarAT").removeClass("hide");
                             $("#editarAT").addClass("hide");
-                            $("#cancelarAT").addClass("hide");
+                            $(".cancelar").addClass("hide");
                             $("#formularioAT")[0].reset();                            
                         }
                     }
@@ -189,7 +184,46 @@
                 }
             });           
         });
-       
+/*-------------------------------------------JOBS--TITLE--------------------------------------------------------------*/
+
+$(".editarjt_1").click(function(){
+    $(".editarjt").removeClass("hide");
+    $(".cancelar").removeClass("hide");
+    $(".guardarjt").addClass("hide"); 
+    $(this).parents("tr").find("td:eq(0)").each(function(){
+        id=$(this).html();                
+    });
+    $(this).parents("tr").find("td:eq(1)").each(function(){
+        name=$(this).html();                
+    });
+    $(this).parents("tr").find("td:eq(2)").each(function(){
+        description=$(this).html();                
+    });
+    $(this).parents("tr").find("td:eq(3)").each(function(){
+        salary=$(this).html();                
+    });
+    $(this).parents("tr").find("td:eq(4)").each(function(){
+        work_area_id=$(this).html();                
+    });
+    $("#idjt").val(id);
+    $("#namejt").val(name);
+    $("#descriptionjt").val(description);   
+    $("#salaryjt").val(salary); 
+    //$("#area_trabajoat").val(work_area_id); 
+          
+    /* $("#area_trabajoat option").each(function(){
+        alert('opcion '+$(this).text()+' valor '+ $(this).attr('id'))
+     }); */
+     
+     $("#area_trabajoat option").each(function(){
+        var a = $(this).attr('id');
+        if(work_area_id == a){
+           alert('hola campeon');
+        }
+     });
+    
+});
+
        
 
         

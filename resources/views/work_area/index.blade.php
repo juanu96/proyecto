@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="cerrar">
+          <button type="button" class="close cerrar" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         <h3 class="modal-title" id="areas_de_trabajo">Areas de Trabajo</h3>
@@ -32,7 +32,7 @@
               <div class="form-group">
                   <button class="btn btn-primay" id="guardarAT" type="submit" >Guardar</button>
                   <button class="btn btn-primay hide" type="submit" id="editarAT">Editar</button>     
-                  <button class="btn btn-danger hide" type="reset" id="cancelarAT">Cancelar</button>       
+                  <button class="btn btn-danger hide cancelar" type="reset">Cancelar</button>       
               </div>
             </form>
         </div> 
@@ -64,7 +64,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-closeAT">Close</button>
+        <button type="button" class="btn btn-primary cerrar" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

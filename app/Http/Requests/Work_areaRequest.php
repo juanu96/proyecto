@@ -27,5 +27,5 @@ class Work_areaRequest extends FormRequest
             'name'=>'required|max:255',
             'description'=>'required|max:255',
         ];
-    }
+    }    
 }

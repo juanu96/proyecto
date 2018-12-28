@@ -264,7 +264,7 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/worker "><i class="fa fa-link"></i> <span>Worker</span></a></li>
+        <li class="active"><a href="/worker "><i class="fa fa-user"></i> <span>Worker</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Otro</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
