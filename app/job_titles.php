@@ -19,4 +19,9 @@ class job_titles extends Model
         'work_area_id'
     ];
 
+    public function WorkAreaName()
+    {
+        return $this->belongsTo('App\Work_area','work_area_id');
+    }
+
 }

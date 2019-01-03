@@ -79,7 +79,7 @@
                               <td class="jtname">{{$itemjt->name}}</td>
                               <td class="jtdescription">{{$itemjt->description}}</td>
                               <td class="jtsalary">{{$itemjt->salary}}</td>
-                              <td class="jtwork_area_id">{{$itemjt->work_area_id}}</td> 
+                              <td class="jtwork_area_id">{{$itemjt->WorkAreaName->name}}</td> 
                               <td>
                                 <a href="#" class="glyphicon glyphicon-pencil editarjt_1 "aria-hidden="true" name="editar" data-id="{{$itemjt->id}}" data-name="{{$itemjt->name}}"></a>
                                 <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemjt ->id}}" data-name="{{$itemjt->name}}"></a>

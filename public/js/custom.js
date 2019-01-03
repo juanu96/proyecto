@@ -186,13 +186,14 @@ $(".editarjt_1").click(function(){
     var type = 'POST';
 
     var res = postData(formData, url, type);
+    console.log(res);
     if (res !== null) {
         var row ='<tr data-item="'+res.id+'">'+
         '<td>'+res.id+'</td>'+
         '<td class="jtname">'+res.name+'</td>' +
         '<td class="jtdescription">'+res.description+'</td>' +
         '<td class="jtsalary">'+res.salary+'</td>' +
-        '<td class="jtwork_area_id">'+res.work_area_idjt+'</td>' +
+        '<td class="jtwork_area_id">'+res.WorkAreaName+'</td>' +
         '<td>'+
         '<a href="#" class="glyphicon glyphicon-pencil editarjt_1" aria-hidden="true" name="editar" data-id="'+res.id+'" data-name="'+res.name+'"></a>'+
         '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="'+res.id+'"></a>'+
@@ -234,8 +235,9 @@ $("#editarjt").on("click", function(e){
         $("#guardarjt").removeClass("hide");
         $("#editarjt").addClass("hide");
         $(".cancelar").addClass("hide");
-        $("#formulariojt")[0].reset();      
+        $("#formulariojt")[0].reset();
     }
+   
             
     }); 
 

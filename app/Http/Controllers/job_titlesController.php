@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\job_titles as job_title; 
+use App\Work_area as work_area; 
 use Carbon\Carbon;
 use DataTables;
 use Redirect;
@@ -18,12 +19,14 @@ class job_titlesController extends Controller
         if($request->ajax()) 
         {
             $data = new job_title();
-
+            
             $data->name = $request->input('name');
             $data->description = $request->input('description');
             $data->salary = $request->input('salary');
             $data->work_area_id = $request->input('work_area_id');
-            $data->save();            
+            $data->save();  
+            $data->WorkAreaName = $data->WorkAreaName->name;
+
             return response(['success' => true, 'message' => 'Puesto de trabajo agregada correctamente, id:' . $data->id, 'data' => $data], 201)
                     ->header('Content-Type', 'text/plain');
         } 
