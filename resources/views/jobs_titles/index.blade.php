@@ -42,7 +42,7 @@
                         {{-- input work area id --}}
                         <div class="form-group col-xs-6">
                                 <label for="work_area_id">Area de Trabajo</label>
-                                <select name="work_area_id" class="form-control" id="area_trabajojt">
+                                <select name="work_area_id" class="form-control" id="work_area_idjt">
                                   <option value="" disabled selected>seleccionar</option>    
                                   @foreach ($datawa as $itemwa)                             
                                   <option value="{{$itemwa->id}}">{{$itemwa->name}}</option>
@@ -82,7 +82,7 @@
                               <td class="jtwork_area_id">{{$itemjt->work_area_id}}</td> 
                               <td>
                                 <a href="#" class="glyphicon glyphicon-pencil editarjt_1 "aria-hidden="true" name="editar" data-id="{{$itemjt->id}}" data-name="{{$itemjt->name}}"></a>
-                                <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemjt ->id}}" data-name="{{$itemjt->name}}"></a>
+                                <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemjt ->id}}" data-name="{{$itemjt->name}}"></a>
                               </td>                   
                           </tr> 
                       

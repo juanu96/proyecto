@@ -192,16 +192,64 @@ $(".editarjt_1").click(function(){
         '<td class="jtname">'+res.name+'</td>' +
         '<td class="jtdescription">'+res.description+'</td>' +
         '<td class="jtsalary">'+res.salary+'</td>' +
-        '<td class="jtwork_area_id">'+res.areatrabajo+'</td>' +
+        '<td class="jtwork_area_id">'+res.work_area_idjt+'</td>' +
         '<td>'+
         '<a href="#" class="glyphicon glyphicon-pencil editarjt_1" aria-hidden="true" name="editar" data-id="'+res.id+'" data-name="'+res.name+'"></a>'+
         '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="'+res.id+'"></a>'+
         '</td>'+
         '</tr>';
         $("#tabla_jobtitle tr:last").after(row); 
-        $("#formulario")[0].reset(); 
+        $("#formulariojt")[0].reset(); 
     }
 });
+
+/*  //Metodo actualizar para puestos de trabajo */
+$("#editarjt").on("click", function(e){
+    e.preventDefault(); 
+    
+    var form = $('#formulariojt');
+    var id = form.find($('#idjt')).val();
+    var name = form.find($('#namejt'));
+    var description = form.find($('#descriptionjt'));
+    var salary = form.find($('#namejt'));
+    var areatrabajo = form.find($('#work_area_idjt'));
+    var formData = {
+        _token: token,
+        name: name.val(),
+        description: description.val(),
+        salary: salary.val(),
+        work_area_id: areatrabajo.val()
+    };
+
+    var url = '/job_title/' + id;
+    var type = "PUT";
+    var res = post_form(formData, url, type);
+    if (res !== null) {
+        var data = $('#tabla_jobtitle').find('tbody').find("tr[data-item='" + id + "']");
+        console.log(data);
+        $(data.find(".jtname")).html(res.name);
+        $(data.find(".jtdescription")).html(res.description);
+        $(data.find(".jtsalary")).html(res.salary);
+        $(data.find(".jtwork_area_id")).html(res.work_area_id);
+        $("#guardarjt").removeClass("hide");
+        $("#editarjt").addClass("hide");
+        $(".cancelar").addClass("hide");
+        $("#formulariojt")[0].reset();      
+    }
+            
+    }); 
+
+    /*  //Metodo eliminar para puestos de trabajo */
+    $(".eliminar_jt").on("click", function(e){  
+        var id = $(this).attr('data-id');
+        var url = '/job_title/' + id;
+        var res = delete_data(url);
+        if (res !== null) {
+            var data = $('#tabla_jobtitle').find('tbody').find("tr[data-item='" + id + "']");
+            data.remove();
+        }   
+    
+    });
 
   
   /* //----------------------------------------------------------------------------------------------------------- */
@@ -345,7 +393,9 @@ $(function() {
 
     $(".cancelar").click(function(){
         $("#guardarAT").removeClass("hide");
+        $(".guardarjt").removeClass("hide");
         $("#editarAT").addClass("hide");
+        $(".editarjt").addClass("hide");
         $(".cancelar").addClass("hide");
         $("#formularioAT")[0].reset();     
         $("#formulariojt")[0].reset();       
