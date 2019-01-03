@@ -48,8 +48,9 @@
                         </tr>
                     </thead>
                     {{ csrf_field() }}
+                    <tbody>
                    @foreach ($datawa as $itemwa)
-                      <tbody>
+                      
                       <tr data-item="{{$itemwa->id}}">
                             <td>{{$itemwa->id}}</td>
                             <td class="waname">{{$itemwa->name}}</td>
@@ -59,8 +60,8 @@
                               <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemwa ->id}}" data-name="{{$itemwa->name}}"></a>
                             </td>                   
                         </tr> 
-                    </tbody>
                     @endforeach
+                </tbody>
         </table>
       </div>
       <div class="modal-footer">

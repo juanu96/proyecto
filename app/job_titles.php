@@ -12,9 +12,9 @@ class job_titles extends Model
 
     public $timestamps=false;
 
-    protected $fillable =[
+    protected $fillable=[
         'name',
-        'descripion',
+        'description',
         'salary',
         'work_area_id'
     ];

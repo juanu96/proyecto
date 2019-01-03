@@ -16,7 +16,7 @@ use Laracasts\Flash\Flash;
 class work_areaController extends Controller
 {
      
-    public function store(Work_areaRequest $request)
+    public function store(Request $request)
     {          
 
              if($request->ajax())

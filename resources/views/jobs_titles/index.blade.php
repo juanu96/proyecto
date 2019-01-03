@@ -11,16 +11,16 @@
         <div class="col-mg-1    2 col-md-12 col-sm-12 col-xs-12">
         @if (count($errors)>0)
           <div class="alert alert-danger">
-              <ul>
+              <ul> 
                   @foreach ($errors->all() as $error)
                   <li>{{$error}}</li>
                   @endforeach 
               </ul>        
           </div>
           @endif 
-              <form id="workareaform">                
-                  <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                  <input type="hidden" name="id" id="idAT">
+              <form id="jobtitleform">                
+                  {{-- <input type="hidden" name="_token" id="tokenjt" value="{{ csrf_token() }}"> --}}
+                  <input type="hidden" name="id" id="idjt">
                   {{-- input name --}}                  
                         <div class="form-group col-xs-6">
                             <label for="nombre">Nombre</label>
@@ -42,16 +42,16 @@
                         {{-- input work area id --}}
                         <div class="form-group col-xs-6">
                                 <label for="work_area_id">Area de Trabajo</label>
-                                <select name="work_area_id" class="form-control" id="area_trabajoat">
-                                  <option value="" disabled selected>seleccionar</option>
-                                  @foreach ($datawa as $itemwa)
-                                  <option id="{{$itemwa->id}}" >{{$itemwa->name}}</option>
-                                  @endforeach
+                                <select name="work_area_id" class="form-control" id="area_trabajojt">
+                                  <option value="" disabled selected>seleccionar</option>    
+                                  @foreach ($datawa as $itemwa)                             
+                                  <option value="{{$itemwa->id}}">{{$itemwa->name}}</option>
+                                  @endforeach                                  
                                   </select>
                             </div>
                   {{-- Botones --}}                  
                         <div class="form-group">
-                            <button class="btn btn-primay guardarjt" type="submit" >Guardar</button>
+                            <button class="btn btn-primay guardarjt" id="btn-guardarjt" type="submit" >Guardar</button>
                             <button class="btn btn-primay hide editarjt" type="submit">Editar</button>     
                             <button class="btn btn-danger hide cancelar" type="reset">Cancelar</button>       
                         </div>
@@ -59,7 +59,7 @@
           </div> 
         </div>
         <div class="modal-body prueba" >
-          <table class="table table-striped tabled-bordered table-condensed table-hover" id="tbodywa" >
+          <table class="table table-striped tabled-bordered table-condensed table-hover" id="tabla_jobtitle" >
                       <thead>
                           <tr>
                               <th class="text-left">Id</th>
@@ -71,8 +71,9 @@
                           </tr>
                       </thead>
                       {{ csrf_field() }}
-                     @foreach ($datajt as $itemjt)
-                        <tbody>
+                      <tbody>
+                      @foreach ($datajt as $itemjt)
+                        
                         <tr data-item="{{$itemjt->id}}">
                               <td>{{$itemjt->id}}</td>
                               <td class="jtname">{{$itemjt->name}}</td>
@@ -84,9 +85,10 @@
                                 <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemjt ->id}}" data-name="{{$itemjt->name}}"></a>
                               </td>                   
                           </tr> 
-                      </tbody>
+                      
                       @endforeach
-          </table>
+                          </tbody>
+                    </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary cerrar" data-dismiss="modal">Close</button>

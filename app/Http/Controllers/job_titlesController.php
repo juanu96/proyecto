@@ -3,38 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\job_titles as job_title; 
+use Carbon\Carbon;
+use DataTables;
+use Redirect;
+use response;
+use DB;
+use Laracasts\Flash\Flash;
 
 class job_titlesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()) 
+        {
+            $job_title = job_title::create($request->all());
+            $job_title->save();
+            
+            return response(['success' => true, 'message' => 'Puesto de trabajo agregada correctamente, id:' . $job_title->id, 'data' => $job_title], 201)
+                    ->header('Content-Type', 'text/plain');
+        } 
     }
 
     /**

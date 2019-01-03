@@ -1,188 +1,146 @@
-  
-  $(function() {
-        $('#Worker-table').DataTable({
-          language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }},
-        
-        });
 
 
-        $('#users-table').DataTable({
-          language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }},
-        
-        
-        });  
-         
-       
-        
-    });  
-        $(".cerrar").click(function(){
-            $("#guardarAT").removeClass("hide");
-            $("#editarAT").addClass("hide");
-            $(".cancelar").addClass("hide");
-            $("#formularioAT")[0].reset(); 
-            $("#formulariojt")[0].reset();           
-        }); 
+       var error_opt = {
+            className: 'error',
+            position: "top-center",
+            autoHide: false
+        }; 
 
-        $(".cancelar").click(function(){
-            $("#guardarAT").removeClass("hide");
-            $("#editarAT").addClass("hide");
-            $(".cancelar").addClass("hide");
-            $("#formularioAT")[0].reset();     
-            $("#formulariojt")[0].reset();       
-        });        
-        
-        $(".editarat_1").click(function(){
-            $("#editarAT").removeClass("hide");
-            $(".cancelar").removeClass("hide");
-            $("#guardarAT").addClass("hide"); 
-            $(this).parents("tr").find("td:eq(0)").each(function(){
-                id=$(this).html();                
-            });
-            $(this).parents("tr").find("td:eq(1)").each(function(){
-                name=$(this).html();                
-            });
-            $(this).parents("tr").find("td:eq(2)").each(function(){
-                description=$(this).html();                
-            });
-            $("#idAT").val(id);
-            $("#nameAT").val(name);
-            $("#descriptionAT").val(description);          
-        });
+        var success_opt = {
+            className: 'success',
+            position: "top-center",
+            autoHide: true
+        };
 
-        //Metodo crear para areas de trabajo
-        $("#guardarAT").on("click", function(e){            
-                e.preventDefault(); 
+        var token = $('meta[name="csrf-token"]').attr('content');
 
-                var nombre = $('#nameAT').val();
-                var descripción = $('#descriptionAT').val();
-                $.ajax({
-                    type: "POST",
-                    url:'/work_area',
-                    dataType: "json",
-                    data: {
-                        "_token": $('#token').val(),   
-                        'name': nombre,
-                        'description': descripción,
-                    },
-                    success: function(data){
-                        console.log(data);
-                        if((data.errors)){
-                            alert("No se pudo agregar correctamente.");
-                        }
-                        else{
-                            alert("El area de trabajo: "+nombre+", se ha agregado correctamente.");
-                            $("#formularioAT")[0].reset();
-                            var	row = '';                            
-                                console.log(data.data);     
-                                var value = data.data;
-                                row ='<tr>'+
-                                '<td>'+value.id+'</td>'+
-                                '<td>'+value.name+'</td>' +
-                                '<td>'+value.description+'</td>' +
-                                '<td>'+
-                                '<a href="#" class="glyphicon glyphicon-pencil editarat_1" aria-hidden="true" name="editar" data-id="'+value.id+'" data-name="'+value.name+'"></a>'+
-                                '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
-                                '</td>'+
-                                '</tr>';
-                                $("#tbodywa tr:last").after(row);                                                                                                
-                            }
-                        }              
-                    });                  
-                });
-            //Metodo actualizar para areas de trabajo
-            $("#editarAT").on("click", function(e){
-                e.preventDefault(); 
-                var name = $('#nameAT').val();
-                var description = $('#descriptionAT').val();
-                 $.ajax({
-                    type:"PUT",
-                    url:'/work_area/'+id,
-                    dataType: "json",
-                    data: {
-                        "_token": $('#token').val(),
-                        'name': name,
-                        'description': description,
-                    }, 
-                        success: function(data){
-                        console.log(data);
-                        if((data.errors)){
-                            alert("No se pudo actualizar correctamente.");
-                        }
-                        else{
-                            var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
-                            console.log(data);
-                            alert("actualizado correctamente");
-                            $(data.find(".waname")).html(name);
-                            $(data.find(".wadescription")).html(description);
-                            $("#guardarAT").removeClass("hide");
-                            $("#editarAT").addClass("hide");
-                            $(".cancelar").addClass("hide");
-                            $("#formularioAT")[0].reset();                            
-                        }
-                    }
-                }); 
-             });
+        var workareaform = $('#workareaform');
+        var nombrewaf = $(workareaform.find('#nameAT'));
+        var descriptionwaf = $(workareaform.find('#descriptionAT'));
 
-            //Metodo eliminar para areas de trabajo
-            $(".eliminar_at").on("click", function(e){  
-                    e.preventDefault();
-                    var id = $(this).attr('data-id');
-                    var name = $(this).attr('data-name');
-                    $.ajax({
-                        type:'DELETE',
-                        url:'/work_area/'+id,
-                        data: {
-                            "_token": $('#token').val(),
-                        },
-                        success: function(data){
-                        console.log(data);
-                        if((data.errors)){
-                            alert("No se pudo eliminar correctamente.");
-                        }
-                        else{
-                        alert("El area de trabajo: "+name+", se ha eliminado correctamente.");
-                        var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
-                        data.remove();
-                    }
 
+        /*Eliminar info*/
+    function delete_data(url) {
+        var response = null;
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': token},
+            url: url,
+            method: 'delete',
+            dataType: 'json',
+            success: function (res) {
+                $.notify(res.message, success_opt);
+                response = res.data;
+            },
+            error: function (res) {
+                if (res) {
+                    $.notify(res.responseJSON.message, error_opt);
+                    response = res.data;
+                } else {
+                    $.notify('Error desconocido', error_opt);
                 }
-            });           
+            },
+            async: false
+        });
+        return response;
+    }
+        /* Editar info */
+    function deletewa() {
+        var id = $(this).attr('data-id');
+        var url = '/work_area/' + id;
+        var res = delete_data(url);
+        if (res !== null) {
+            var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+            console.log(id);
+            data.remove()
+            console.log(data);            
+        }
+    }
+
+    function editwa() {
+        $("#editarAT").removeClass("hide");
+        $(".cancelar").removeClass("hide");
+        $("#guardarAT").addClass("hide"); 
+        $(this).parents("tr").find("td:eq(0)").each(function(){
+            id=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(1)").each(function(){
+            name=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(2)").each(function(){
+            description=$(this).html();                
+        });
+        $("#idAT").val(id);
+        $("#nameAT").val(name);
+        $("#descriptionAT").val(description);
+    }
+
+ /*  //---------------------------------------------------------------------------------------------------------------   */
+        /* //Metodo crear para areas de trabajo */
+        $("#formularioAT").on("submit", function(e){            
+                e.preventDefault(); 
+                var form = $(this);
+                var formData = new FormData(form[0]);
+                var url = '/work_area';
+                var type = 'POST';
+
+                var res = postData(formData, url, type);
+                if (res !== null) {
+                    var	row ='<tr data-item="'+res.id+'">'+
+                    '<td>'+res.id+'</td>'+
+                    '<td class="waname">'+res.name+'</td>' +
+                    '<td class="wadescription">'+res.description+'</td>' +
+                    '<td>'+
+                    '<a href="#" class="glyphicon glyphicon-pencil editarat_1" aria-hidden="true" name="editar" data-id="'+res.id+'" data-name="'+res.name+'"></a>'+
+                    '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_at" aria-hidden="true" style="margin-left: 20px" data-id="'+res.id+'"></a>'+
+                    '</td>'+
+                    '</tr>';
+                    $("#tbodywa tr:last").after(row);   
+                    $("#formularioAT")[0].reset();                            
+                    $(".eliminar_at").bind("click", deletewa);
+                    $(".editarat_1").bind("click", editwa);
+                }
+            });
+      
+           /*  //Metodo actualizar para areas de trabajo */
+           $("#editarAT").on("click", function(e){
+            e.preventDefault(); 
+            
+            var form = $('#formularioAT');
+            var id = form.find($('#idAT')).val();
+            var name = form.find($('#nameAT'));
+            var description = form.find($('#descriptionAT'));
+            var formData = {
+                _token: token,
+                name: name.val(),
+                description: description.val()
+            };
+
+            var url = '/work_area/' + id;
+            var type = "PUT";
+            var res = post_form(formData, url, type);
+            if (res !== null) {
+                var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+                console.log(data);
+                $(data.find(".waname")).html(res.name);
+                $(data.find(".wadescription")).html(res.description);
+                $("#guardarAT").removeClass("hide");
+                $("#editarAT").addClass("hide");
+                $(".cancelar").addClass("hide");
+                $("#formularioAT")[0].reset();      
+            }
+                    
+            }); 
+
+           /*  //Metodo eliminar para areas de trabajo */
+           $(".eliminar_at").on("click", function(e){  
+            var id = $(this).attr('data-id');
+            var url = '/work_area/' + id;
+            var res = delete_data(url);
+            if (res !== null) {
+                var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+                data.remove();
+            }   
+        
         });
 /*-------------------------------------------JOBS--TITLE--------------------------------------------------------------*/
 
@@ -209,22 +167,204 @@ $(".editarjt_1").click(function(){
     $("#namejt").val(name);
     $("#descriptionjt").val(description);   
     $("#salaryjt").val(salary); 
-    //$("#area_trabajoat").val(work_area_id); 
-          
-    /* $("#area_trabajoat option").each(function(){
-        alert('opcion '+$(this).text()+' valor '+ $(this).attr('id'))
-     }); */
-     
-     $("#area_trabajoat option").each(function(){
-        var a = $(this).attr('id');
-        if(work_area_id == a){
-           alert('hola campeon');
-        }
-     });
+   /*  $("#area_trabajoat option").each(function(){
+     var a = $(this).attr('id');
+     if(work_area_id == a){
+       alert('a');
+    }
+    }); */ 
     
 });
 
-       
 
-        
-        
+  /* //Metodo crear para puestos de trabajo */
+  $("#formulariojt").on("submit", function(e){            
+    e.preventDefault(); 
+    var form = $(this);
+    var formData = new FormData(form[0]);
+    var url = '/job_title';
+    var type = 'POST';
+
+    var res = postData(formData, url, type);
+    if (res !== null) {
+        var row ='<tr data-item="'+res.id+'">'+
+        '<td>'+res.id+'</td>'+
+        '<td class="jtname">'+res.name+'</td>' +
+        '<td class="jtdescription">'+res.description+'</td>' +
+        '<td class="jtsalary">'+res.salary+'</td>' +
+        '<td class="jtwork_area_id">'+res.areatrabajo+'</td>' +
+        '<td>'+
+        '<a href="#" class="glyphicon glyphicon-pencil editarjt_1" aria-hidden="true" name="editar" data-id="'+res.id+'" data-name="'+res.name+'"></a>'+
+        '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="'+res.id+'"></a>'+
+        '</td>'+
+        '</tr>';
+        $("#tabla_jobtitle tr:last").after(row); 
+        $("#formulario")[0].reset(); 
+    }
+});
+
+  
+  /* //----------------------------------------------------------------------------------------------------------- */
+  
+  /*Enviar sin submit*/
+  function post_form(formData, url, type) {
+    var response = null;
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': token},
+        url: url,
+        method: type,
+        data: formData,
+        dataType: 'json',
+        success: function (res) {
+            $.notify(res.message, success_opt);
+            response = res.data;
+        },
+        error: function (res) {
+            if (res) {
+                $.notify(res.responseJSON.message, error_opt);
+            } else {
+                $.notify('Error desconocido', error_opt);
+            }
+        },
+        async: false
+    });
+    return response;
+}
+/*  enviar con submit */
+function postData(formData, url, type) {
+    var response = null;
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': token},
+        url: url,
+        type: type,
+        data: formData,
+        dataType: 'json',
+        success: function (res) {
+            $.notify(res.message, success_opt);
+            response = res.data;
+        },
+        error: function (res) {
+            if (res) {
+                $.notify(res.responseJSON.message, error_opt);
+            } else {
+                $.notify('Error desconocido', error_opt);
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        async: false
+    });
+    return response;
+}
+        /*eliminar informacion */
+function delete_data(url) {
+    var response = null;
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': token},
+        url: url,
+        method: 'delete',
+        dataType: 'json',
+        success: function (res) {
+            $.notify(res.message, success_opt);
+            response = res.data;
+        },
+        error: function (res) {
+            if (res) {
+                $.notify(res.responseJSON.message, error_opt);
+                response = res.data;
+            } else {
+                $.notify('Error desconocido', error_opt);
+            }
+        },
+        async: false
+    });
+    return response;
+}
+
+  
+$(function() {
+    $('#Worker-table').DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }},
+    
+    });
+
+
+    $('#users-table').DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }},
+    
+    
+    });  
+     
+   
+    
+});  
+    $(".cerrar").click(function(){
+        $("#guardarAT").removeClass("hide");
+        $("#editarAT").addClass("hide");
+        $(".cancelar").addClass("hide");
+        $("#formularioAT")[0].reset(); 
+        $("#formulariojt")[0].reset();           
+    }); 
+
+    $(".cancelar").click(function(){
+        $("#guardarAT").removeClass("hide");
+        $("#editarAT").addClass("hide");
+        $(".cancelar").addClass("hide");
+        $("#formularioAT")[0].reset();     
+        $("#formulariojt")[0].reset();       
+    });        
+    
+    $(".editarat_1").click(function(){
+        $("#editarAT").removeClass("hide");
+        $(".cancelar").removeClass("hide");
+        $("#guardarAT").addClass("hide"); 
+        $(this).parents("tr").find("td:eq(0)").each(function(){
+            id=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(1)").each(function(){
+            name=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(2)").each(function(){
+            description=$(this).html();                
+        });
+        $("#idAT").val(id);
+        $("#nameAT").val(name);
+        $("#descriptionAT").val(description);          
+    });
