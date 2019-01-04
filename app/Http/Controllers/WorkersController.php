@@ -25,7 +25,7 @@ class WorkersController extends Controller
         {
             $data=Worker::get();
             $datawa=work_area::get();
-            $datajt=job_title::get();            
+            $datajt=job_title::get();  
             return view('worker.index',compact('data','datawa','datajt'));   
         }
     }

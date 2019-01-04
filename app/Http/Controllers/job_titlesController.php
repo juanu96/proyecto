@@ -3,23 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\job_titlesRequest;
 use App\job_titles as job_title; 
 use App\Work_area as work_area; 
 use Carbon\Carbon;
-use DataTables;
-use Redirect;
-use response;
-use DB;
-use Laracasts\Flash\Flash;
+use Validator;
 
 class job_titlesController extends Controller
 {
-    public function store(Request $request)
+    public function store(job_titlesRequest $request)
     {
-        if($request->ajax()) 
+        if($request->ajax())
         {
-            $data = new job_title();
-            
+           
+            $data = work_area::create($request->all());               
             $data->name = $request->input('name');
             $data->description = $request->input('description');
             $data->salary = $request->input('salary');
@@ -29,20 +26,23 @@ class job_titlesController extends Controller
 
             return response(['success' => true, 'message' => 'Puesto de trabajo agregada correctamente, id:' . $data->id, 'data' => $data], 201)
                     ->header('Content-Type', 'text/plain');
+            
         } 
     }
 
-    public function update(Request $request, $id)
+    public function update(job_titlesRequest $request, $id)
     {
         if($request->ajax())
         {
-        $job_title = job_title::find($id);
-        $job_title->name = $request->get('name');
-        $job_title->description = $request->get('description');
-        $job_title->salary = $request->get('salary');
-        $job_title->work_area_id = $request->get('work_area_id');
-        $job_title->update();
-        return response(['success' => true, 'message' => 'Area de trabajo actualizada correctamente, id:' . $work_area->id, 'data' => $work_area], 201)
+        $data = job_title::find($id);
+        $data->name = $request->get('name');
+        $data->description = $request->get('description');
+        $data->salary = $request->get('salary');
+        $data->work_area_id = $request->get('work_area_id');
+        $data->update();      
+        $data->WorkAreaName = $data->WorkAreaName->name;
+
+        return response(['success' => true, 'message' => 'Area de trabajo actualizada correctamente, id:' . $data->id, 'data' => $data], 201)
                     ->header('Content-Type', 'text/plain');
         }
     }

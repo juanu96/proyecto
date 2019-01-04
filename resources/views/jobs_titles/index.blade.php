@@ -9,15 +9,15 @@
           <h3 class="modal-title" id="puesto_de_trabajo">Puestos de Trabajo</h3>
           <form id="formulariojt">
         <div class="col-mg-1    2 col-md-12 col-sm-12 col-xs-12">
-        @if (count($errors)>0)
-          <div class="alert alert-danger">
-              <ul> 
-                  @foreach ($errors->all() as $error)
-                  <li>{{$error}}</li>
-                  @endforeach 
-              </ul>        
-          </div>
-          @endif 
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
               <form id="jobtitleform">                
                   {{-- <input type="hidden" name="_token" id="tokenjt" value="{{ csrf_token() }}"> --}}
                   <input type="hidden" name="id" id="idjt">
@@ -52,7 +52,7 @@
                   {{-- Botones --}}                  
                         <div class="form-group">
                             <button class="btn btn-primay guardarjt" id="btn-guardarjt" type="submit" >Guardar</button>
-                            <button class="btn btn-primay hide editarjt" type="submit">Editar</button>     
+                            <button class="btn btn-primay hide editarjt" id="editarjt" type="submit">Editar</button>     
                             <button class="btn btn-danger hide cancelar" type="reset">Cancelar</button>       
                         </div>
               </form>
@@ -79,9 +79,9 @@
                               <td class="jtname">{{$itemjt->name}}</td>
                               <td class="jtdescription">{{$itemjt->description}}</td>
                               <td class="jtsalary">{{$itemjt->salary}}</td>
-                              <td class="jtwork_area_id">{{$itemjt->WorkAreaName->name}}</td> 
+                              <td class="jtwork_area_id" data-name="{{$itemjt->WorkAreaName->id}}">{{$itemjt->WorkAreaName->name}}</td> 
                               <td>
-                                <a href="#" class="glyphicon glyphicon-pencil editarjt_1 "aria-hidden="true" name="editar" data-id="{{$itemjt->id}}" data-name="{{$itemjt->name}}"></a>
+                                <a href="#" class="glyphicon glyphicon-pencil editarjt_1 "aria-hidden="true" name="editar" data-id="{{$itemjt->id}}" data-name="{{$itemjt->WorkAreaName->id}}"></a>
                                 <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="{{$itemjt ->id}}" data-name="{{$itemjt->name}}"></a>
                               </td>                   
                           </tr> 

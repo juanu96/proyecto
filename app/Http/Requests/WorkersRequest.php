@@ -32,12 +32,12 @@ class WorkersRequest extends FormRequest
             'departamento'=>'required|numeric|max:11',
             'fecha_de_registro'=>'required|date_format:d/m/Y',
             'cumpleaños'=>'required|date_format:d/m/Y',
-            'viatico'=>'required|between:0,7.2',
+            'viatico'=>'required|between:0,9999999.99',
             'hijos/as'=>'required|numeric|max:11',
             'nivel_academico'=>'required|max:255',
             'profesión'=>'required|max:255',
             'puesto_laboral'=>'required|numeric|max:10',
-            'vacaciones'=>'between:0,5.2',
+            'vacaciones'=>'between:0,99999.99',
         ];
     }
 }

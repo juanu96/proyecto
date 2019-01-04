@@ -13,7 +13,7 @@ class job_titlesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class job_titlesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'salary' => 'required|numeric|between:0,9999999.99',
+            'work_area_id' => 'required|numeric|max:100',
         ];
     }
 }

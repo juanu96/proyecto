@@ -48,6 +48,8 @@
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
 <script src="{{asset('js/notify.js')}}"></script>
+<script src="{{asset('js/jquery.validate.js')}}"></script>
+<script src="{{asset('js/jquery.form.js')}}"></script>
 
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
