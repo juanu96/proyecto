@@ -28,4 +28,14 @@ class Work_areaRequest extends FormRequest
             'description'=>'required|max:255',
         ];
     }    
+
+    public function messages()
+    {
+        return[
+            'name.required' => 'Debes agregar el nombre de el area de trabajo',
+            'name.max' => 'Te has pasado de caracteres, solo 255',
+            'description.required' => 'Describe brevemente el area de trabajo',
+            'description.max' => 'Te has pasado de caracteres, solo 255'
+        ];
+    }
 }

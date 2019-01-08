@@ -37,7 +37,7 @@
                 </thead>
            
                @foreach ($data as $item)
-                <tr>
+                <tr data-item="{{$item->id}}">
                     <td>{{$item->id}}</td>
                     <td>{{$item->name}}</td>
                     <td>{{$item->id_card}}</td>
@@ -46,8 +46,8 @@
                     <td>{{$item->viatic}}</td>
                     <td>{{$item->job_title_id}}</td>
                     <td>{{$item->vacation}}</td> 
-                    <td>
-                    <a href="{{URL::action('WorkersController@edit',$item->id)}}" class="glyphicon glyphicon-pencil" aria-hidden="true"></a> 
+                    <td> 
+                    <a href="{{URL::action('WorkersController@edit',$item->id)}}" data-id="{{$item->id}}" class="glyphicon glyphicon-pencil editar_trabajador" aria-hidden="true"></a> 
                     <a href="" data-target="#modal-delete-{{$item->id}}" data-toggle="modal" class="glyphicon glyphicon-trash" aria-hidden="true" style="margin-left: 20px"></a>
                     
                     </td>                   
