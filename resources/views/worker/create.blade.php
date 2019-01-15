@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('content')
 <div class="row">
     <div class="col-mg-1    2 col-md-12 col-sm-12 col-xs-12">
         <h3>New Worker</h3>

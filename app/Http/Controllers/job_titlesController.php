@@ -16,7 +16,7 @@ class job_titlesController extends Controller
         if($request->ajax())
         {
            
-            $data = work_area::create($request->all());               
+            $data = job_title::create($request->all());               
             $data->name = $request->input('name');
             $data->description = $request->input('description');
             $data->salary = $request->input('salary');

@@ -39,7 +39,7 @@
                             <input type="text" name="salary" class="form-control" id="salaryjt" placeholder="Salario C$" value="{{ old('salary') }}">
                         </div>
 
-                        {{-- input work area id --}}
+                        {{-- input work area id selected --}}
                         <div class="form-group col-xs-6">
                                 <label for="work_area_id">Area de Trabajo</label>
                                 <select name="work_area_id" class="form-control" id="work_area_idjt">

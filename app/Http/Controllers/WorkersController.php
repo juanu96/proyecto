@@ -66,23 +66,12 @@ class WorkersController extends Controller
         $datajt=job_title::get();
         $datawa=work_area::get();
         $worker = Worker::find($id);
-
-
-       $puesto_laboral = job_title::find($worker->job_title_id);
-
-       //dd($puesto_laboral->name);
-       $worker->job_title_id = $puesto_laboral->name;
-
-
-
-
+        $puesto_laboral = job_title::find($worker->job_title_id);
         $fecha_actual = Carbon::now();
         $fecha_antigua = Carbon::parse($worker->enroll);
         $antiguedad = $fecha_antigua->diff($fecha_actual);  
         $worker->antiguedad = $antiguedad->y . " año(s) " . $antiguedad->m . " mes(es) " . $antiguedad->d . " día(s)";
 
-        
-        
         return view("worker.edit",compact('worker', 'datajt', 'datawa'));  
     }
 

@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('content')
 <div class="row">
     <div class="col-mg-1    2 col-md-12 col-sm-12 col-xs-12">
     <h3>Editando Trabajador: {{ $worker->name}}</h3>
@@ -33,17 +33,13 @@
                                 </div>
                                 <div class="form-group col-xs-3">
                                         <label for="marital_status">Estado Civil</label>
-                                        <input type="text" name="estado_civil" class="form-control" placeholder="Estado Civil" value="{{$worker->marital_status}}">
-                                </div>
-                                <div class="form-group col-xs-3">
-                                        <label for="marital_status">Estado Civil</label>
-                                        <select name="marital_status" class="form-control">
+                                        <select name="estado_civil" class="form-control">
                                             <option value="" disabled selected>seleccionar</option>                                                                             
-                                            <option value="1">Soltero/a</option>
-                                            <option value="2">Comprometido/a</option>
-                                            <option value="3">Casado/a</option>
-                                            <option value="4">Divorciado/a</option>
-                                            <option value="5">Viudo/a</option>
+                                            <option value="1" @if($worker->marital_status==1) selected='selected'@endif>Soltero/a</option>
+                                            <option value="2" @if($worker->marital_status==2) selected='selected'@endif>Comprometido/a</option>
+                                            <option value="3" @if($worker->marital_status==3) selected='selected'@endif>Casado/a</option>
+                                            <option value="4" @if($worker->marital_status==4) selected='selected'@endif>Divorciado/a</option>
+                                            <option value="5" @if($worker->marital_status==5) selected='selected'@endif>Viudo/a</option>
                                                                              
                                             </select>
                                     </div>
@@ -57,37 +53,33 @@
                                 </div>   
                                 <div class="form-group col-xs-3">
                                         <label for="Edad">Edad</label>
-                                        <input type="text" name="Edad" class="form-control" placeholder="Edad" value="{{$worker->birth->age}}" disabled>
+                                        <input type="text" name="Edad" class="form-control" placeholder="Edad" value="{{$worker->birth->age}}" readonly>
                                 </div>     
                         </div>
                 </div>
         <div class="panel panel-primary">
                 <div class="panel-heading">Infomacion Laboral</div>
                 <div class="panel-body">
-                        <div class="form-group col-xs-3">
+                       <div class="form-group col-xs-3">
                                 <label for="job_title_id">Area Laboral</label>
-                                <input type="text" name="Area_laboral" class="form-control" placeholder="Area Laboral" value="">
+                                <input type="text" name="Area_laboral" class="form-control" placeholder="Area Laboral" value="" readonly>
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="job_title_id">Puesto Laboral</label>
-                                <input type="text" name="puesto_laboral" class="form-control" placeholder="Puesto Laboral" value="{{$worker->job_title_id}}">
-                        </div>
-                        <div class="form-group col-xs-3">
-                                <label for="marital_status">Puesto Laboral</label>
-                                <select name="marital_status" class="form-control">
-                                    <option value="" disabled selected>seleccionar</option>                                                                             
+                                <select name="puesto_laboral" class="form-control">
+                                    <option value="" disabled>seleccionar</option>                                                                             
                                     @foreach ($datajt as $itemjt)                             
-                                    <option value="{{$itemjt->id}}">{{$itemjt->name}}</option>
+                                    <option value="{{$itemjt->id}}" @if($itemjt->id==$worker->job_title_id) selected='selected'@endif >{{$itemjt->name}}</option>
                                     @endforeach                                                            
                                 </select>
                             </div>
                         <div class="form-group col-xs-3">
                                 <label for="enroll">Fecha de Ingreso Laboral</label>
-                                <input type="text" name="fecha_de_registro" class="form-control" placeholder="Fecha de Registro" value="{{$worker->enroll->format('d/m/Y')}}" disabled>
+                                <input type="text" name="fecha_de_registro" class="form-control" placeholder="Fecha de Registro" value="{{$worker->enroll->format('d/m/Y')}}" readonly>
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="antigüedad">antigüedad</label>
-                                <input type="text" name="antigüedad" class="form-control" placeholder="antigüedad" value="{{$worker->antiguedad}}" disabled>
+                                <input type="text" name="antigüedad" class="form-control" placeholder="antigüedad" value="{{$worker->antiguedad}}" readonly>
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="salario">Salario base</label>
@@ -111,22 +103,18 @@
         <div class="panel panel-primary">
                 <div class="panel-heading">Infomacion Académica</div>
                 <div class="panel-body">
-                        <div class="form-group col-xs-6">
+                         <div class="form-group col-xs-6">
                                 <label for="academic_level">Nivel Academico</label>
-                                <input type="text" name="nivel_academico" class="form-control" placeholder="Nivel Academico" value="{{$worker->academic_level}}">
-                        </div>
-                        <div class="form-group col-xs-6">
-                                        <label for="academic_level">Nivel Academico</label>
-                                        <select name="nivel_academico" class="form-control">
-                                            <option value="" disabled selected>seleccionar</option>                                                                             
-                                            <option value="1">Primaria</option>
-                                            <option value="2">Secundaria</option>
-                                            <option value="3">Universidad</option>
-                                            <option value="4">Posgrado</option>
-                                            <option value="5">Maestria</option>
-                                                                             
-                                            </select>
-                                    </div>
+                                <select name="nivel_academico" class="form-control">
+                                        <option value="" disabled selected>seleccionar</option>                                                                             
+                                        <option value="1" @if($worker->academic_level==1) selected='selected'@endif>Primaria</option>
+                                        <option value="2" @if($worker->academic_level==2) selected='selected'@endif>Secundaria</option>
+                                        <option value="3" @if($worker->academic_level==3) selected='selected'@endif>Universidad</option>
+                                        <option value="4" @if($worker->academic_level==4) selected='selected'@endif>Posgrado</option>
+                                        <option value="5" @if($worker->academic_level==5) selected='selected'@endif>Maestria</option>
+                                                                        
+                                        </select>
+                                </div>
                         <div class="form-group col-xs-6">
                                 <label for="profession">profesión</label>
                                 <input type="text" name="profesión" class="form-control" placeholder="Profesión" value="{{$worker->profession}}">
@@ -137,13 +125,51 @@
         <div class="panel panel-primary">
                 <div class="panel-heading">Infomacion de Contacto</div>
                 <div class="panel-body">
-                        <div class="form-group col-xs-6"> 
+                        <div class="form-group col-xs-6">
                                 <label for="deparment">Departamento</label>
-                                <input type="text" name="departamento" class="form-control" placeholder="Departamento" value="{{$worker->deparment}}">
-                        </div>        
+                                <select name="departamento" class="form-control" id="deparment">
+                                        {{-- <option value="" disabled selected>seleccionar</option> --}}                                                                             
+                                        <option value="1"  @if($worker->deparment==1) selected='selected'@endif>Managua</option>
+                                        <option value="2"  @if($worker->deparment==2) selected='selected'@endif>Masaya</option>
+                                        <option value="3"  @if($worker->deparment==3) selected='selected'@endif>León</option>
+                                        <option value="4"  @if($worker->deparment==4) selected='selected'@endif>Granada</option>
+                                        <option value="5"  @if($worker->deparment==5) selected='selected'@endif>Carazo</option>
+                                        <option value="6"  @if($worker->deparment==6) selected='selected'@endif>Estelí</option>
+                                        <option value="7"  @if($worker->deparment==7) selected='selected'@endif>Rivas</option>
+                                        <option value="8"  @if($worker->deparment==8) selected='selected'@endif>Chinandega</option>
+                                        <option value="9"  @if($worker->deparment==9) selected='selected'@endif>Chontales</option>
+                                        <option value="10" @if($worker->deparment==10) selected='selected'@endif>Madriz</option>
+                                        <option value="11" @if($worker->deparment==11) selected='selected'@endif>Matagalpa</option>
+                                        <option value="12" @if($worker->deparment==12) selected='selected'@endif>Nueva Segovia</option>
+                                        <option value="13" @if($worker->deparment==13) selected='selected'@endif>Boaco</option>
+                                        <option value="14" @if($worker->deparment==14) selected='selected'@endif>Rio San Juan</option>
+                                        <option value="15" @if($worker->deparment==15) selected='selected'@endif>Caribe Sur</option>
+                                        <option value="16" @if($worker->deparment==16) selected='selected'@endif>Jinotega</option>
+                                        <option value="17" @if($worker->deparment==17) selected='selected'@endif>Caribe Norte</option>
+                                                                        
+                                        </select>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                                <label for="deparment">Departamento</label>
+                                                <select name="departamento" class="form-control" id="e1">
+                                                        <option value="" disabled selected>seleccionar</option>                                                                             
+                                                        <option value="AL">Alabama</option>
+                                                        
+                                                        <option value="WY">Wyoming</option>
+                                                                                        
+                                                        </select>
+                                                </div>
                         <div class="form-group col-xs-6">
                                 <label for="address">Dirección</label>
                                 <input type="text" name="dirección" class="form-control" placeholder="Dirección" value="{{$worker->address}}">
+                        </div>
+                        <div class="form-group col-xs-6">
+                                <label for="numero_telefonico">N° Telefonico</label>
+                                <input type="text" name="numero_telefonico" class="form-control" placeholder="Numero telefonico" value="">
+                        </div>
+                        <div class="form-group col-xs-6">
+                                <label for="e-mail">E-mail</label>
+                                <input type="text" name="e-mail" class="form-control" placeholder="ejemplo@correo.com" value="">
                         </div>
                 </div>
         </div>

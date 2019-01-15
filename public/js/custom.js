@@ -451,3 +451,7 @@ $(function() {
         $("#nameAT").val(name);
         $("#descriptionAT").val(description);          
     });
+
+    $("#deparment").select2({
+        placeholder: "selecciona un Departamento"
+    });

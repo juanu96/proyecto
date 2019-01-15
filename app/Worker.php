@@ -33,8 +33,8 @@ class Workers extends Model
         'enroll', 
         'birth'        
     ];
-
-    protected $guarded =[
-
-    ];
+    public function JobTitleName()
+    {
+        return $this->belongsTo('App\job_titles','job_title_id'); 
+    }
 }
