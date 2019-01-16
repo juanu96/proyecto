@@ -452,6 +452,19 @@ $(function() {
         $("#descriptionAT").val(description);          
     });
 
-    $("#deparment").select2({
-        placeholder: "selecciona un Departamento"
+    
+    $(".select2js").select2({
+        placeholder: "Selecciona un departamento",
+        language: {
+
+            noResults: function() {
+        
+              return "No hay resultado";        
+            },
+            searching: function() {
+        
+              return "Buscando..";
+            }
+          }
     });
+    

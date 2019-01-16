@@ -25,7 +25,8 @@ class Workers extends Model
         'academic_level',
         'profession',
         'job_title_id',
-        'vacation'        
+        'vacation',
+        'telefono'        
 
     ];
 

@@ -32,7 +32,8 @@ class WorkersController extends Controller
 
     public function create()
     {
-        return view("worker.create");
+        $datajt=job_title::get();
+        return view("worker.create",compact('datajt'));
     }
 
     public function store(WorkersRequest $request)
@@ -52,6 +53,7 @@ class WorkersController extends Controller
         $worker->profession = $request->get('profesión');
         $worker->job_title_id = $request->get('puesto_laboral');
         $worker->vacation = $request->get('vacaciones');
+        $worker->telefono = $request->get('telefono');
         $worker->save();
         return redirect::to('worker');
     }
@@ -63,10 +65,17 @@ class WorkersController extends Controller
 
     public function edit($id)
     {
-        $datajt=job_title::get();
+        
         $datawa=work_area::get();
         $worker = Worker::find($id);
+        $datajt=job_title::get();
         $puesto_laboral = job_title::find($worker->job_title_id);
+       
+        $datajt->WorkAreaName = $puesto_laboral->WorkAreaName->name;
+        $datajt->salary = $puesto_laboral->salary;
+        $datajt->subtotal = $datajt->salary + $worker->viatic;
+      
+        
         $fecha_actual = Carbon::now();
         $fecha_antigua = Carbon::parse($worker->enroll);
         $antiguedad = $fecha_antigua->diff($fecha_actual);  

@@ -15,6 +15,8 @@
         @endif
         {!!Form::model($worker,['method'=>'PATCH','route'=>['worker.update',$worker->id]])!!}
         {!!Form::token()!!}
+
+       {{--  PANEL DE INFORMACION PERSONAL  --}}
         <div class="panel panel-primary">
                 <div class="panel-heading">Información Personal</div>
                 <div class="panel-body">
@@ -57,12 +59,13 @@
                                 </div>     
                         </div>
                 </div>
+          {{-- PANEL DE INFORMACION LABORAL --}}
         <div class="panel panel-primary">
                 <div class="panel-heading">Infomacion Laboral</div>
                 <div class="panel-body">
                        <div class="form-group col-xs-3">
                                 <label for="job_title_id">Area Laboral</label>
-                                <input type="text" name="Area_laboral" class="form-control" placeholder="Area Laboral" value="" readonly>
+                       <input type="text" name="Area_laboral" class="form-control" placeholder="Area Laboral" value="{{$datajt->WorkAreaName}}" readonly>
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="job_title_id">Puesto Laboral</label>
@@ -83,7 +86,7 @@
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="salario">Salario base</label>
-                                <input type="text" name="salario_base" class="form-control" placeholder="salario base" value="">
+                                <input type="text" name="salario_base" class="form-control" placeholder="salario base" value="{{$datajt->salary}}" readonly>
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="viatic">viático</label>
@@ -95,11 +98,11 @@
                         </div>
                         <div class="form-group col-xs-3">
                                 <label for="salario_sub-total">Salario Sub-Total</label>
-                                <input type="text" name="salario_sub-total" class="form-control" placeholder="Salario Sub-Total" value="">
+                        <input type="text" name="salario_sub-total" class="form-control" placeholder="Salario Sub-Total" value="{{$datajt->subtotal}}">
                         </div>
                 </div>
         </div>
-
+{{-- PANEL DE INFORMACION ACADEMICA --}}
         <div class="panel panel-primary">
                 <div class="panel-heading">Infomacion Académica</div>
                 <div class="panel-body">
@@ -121,13 +124,13 @@
                         </div>
                 </div>
         </div>
-
+{{-- PANEL DE INFORMACIONDE CONTACTO --}}
         <div class="panel panel-primary">
                 <div class="panel-heading">Infomacion de Contacto</div>
                 <div class="panel-body">
                         <div class="form-group col-xs-6">
                                 <label for="deparment">Departamento</label>
-                                <select name="departamento" class="form-control" id="deparment">
+                                <select name="departamento" class="form-control select2js">
                                         {{-- <option value="" disabled selected>seleccionar</option> --}}                                                                             
                                         <option value="1"  @if($worker->deparment==1) selected='selected'@endif>Managua</option>
                                         <option value="2"  @if($worker->deparment==2) selected='selected'@endif>Masaya</option>
@@ -149,16 +152,6 @@
                                                                         
                                         </select>
                                 </div>
-                                <div class="form-group col-xs-6">
-                                                <label for="deparment">Departamento</label>
-                                                <select name="departamento" class="form-control" id="e1">
-                                                        <option value="" disabled selected>seleccionar</option>                                                                             
-                                                        <option value="AL">Alabama</option>
-                                                        
-                                                        <option value="WY">Wyoming</option>
-                                                                                        
-                                                        </select>
-                                                </div>
                         <div class="form-group col-xs-6">
                                 <label for="address">Dirección</label>
                                 <input type="text" name="dirección" class="form-control" placeholder="Dirección" value="{{$worker->address}}">
