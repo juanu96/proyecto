@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-mg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="table-responsive">
-            <table class="table table-striped tabled-bordered table-condensed table-hover" id="Worker-table">
+            <table class="table table-striped tabled-bordered table-condensed table-hover DataTablejs" id="Worker-table">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -60,9 +60,7 @@
 </div>
 @stop
 
-    {{-- {!!Form::open()!!}
-    {!!Form::token()!!} --}}
     @include('work_area.index')
     @include('jobs_titles.index')
-    {{-- {!!Form::close()!!} --}}
+    
 

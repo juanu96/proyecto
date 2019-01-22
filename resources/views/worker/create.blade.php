@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-mg-1    2 col-md-12 col-sm-12 col-xs-12">
-        <h3>New Worker</h3>
+    <h3>Nuevo Trabajador</h3>
         @if (count($errors)>0)
         <div class="alert alert-danger">
             <ul>
@@ -36,14 +36,14 @@
                                 <div class="form-group col-xs-3">
                                         <label for="marital_status">Estado Civil</label>
                                         <select name="estado_civil" class="form-control">
-                                            <option value="" disabled selected>seleccionar</option>                                                                             
+                                            <option value="" disabled selected>seleccionar</option>                                                                                                                 
                                             <option value="1">Soltero/a</option>
                                             <option value="2">Comprometido/a</option>
                                             <option value="3">Casado/a</option>
                                             <option value="4">Divorciado/a</option>
                                             <option value="5">Viudo/a</option>
                                                                              
-                                            </select>
+                                         </select>
                                     </div>
                                 <div class="form-group col-xs-3">
                                         <label for="sons">N° Hijos/as</label>
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group col-xs-3">
                                         <label for="birth">Cumpleaños</label>
-                                        <input type="text" name="cumpleaños" class="form-control" placeholder="Cumpleaños" value="{{ old('cumpleaños') }}">
+                                        <input type="text" name="cumpleaños" class="form-control datepickerjs" placeholder="Cumpleaños" value="{{ old('cumpleaños') }}">
                                 </div>
                 </div>
         </div>
@@ -71,7 +71,7 @@
                                     </div>
                                 <div class="form-group col-xs-3">
                                         <label for="enroll">Fecha de Ingreso Laboral</label>
-                                        <input type="text" name="fecha_de_registro" class="form-control datepicker" placeholder="Fecha de Registro" value="{{ old('fecha_de_registro') }}">
+                                        <input type="text" name="fecha_de_registro" class="form-control datepickerjs" placeholder="Fecha de Registro" value="{{ old('fecha_de_registro') }}">
                                 </div>
                                 <div class="form-group col-xs-3">
                                         <label for="viatic">viático</label>
@@ -111,6 +111,7 @@
         <div class="panel panel-primary">
                         <div class="panel-heading">Infomacion de Contacto</div>
                         <div class="panel-body">
+                                <div class="form-group col-xs-12">
                                 <div class="form-group col-xs-6">
                                         <label for="deparment">Departamento</label>
                                         <select name="departamento" class="form-control select2js">
@@ -139,17 +140,98 @@
                                         <label for="address">Dirección</label>
                                         <input type="text" name="dirección" class="form-control" placeholder="Dirección" value="{{ old('dirección') }}">
                                 </div>
-                                <div class="form-group col-xs-6">
+                                </div>
+                                <div class="form-group col-xs-4">
                                         <label for="telefono">N° Telefonico</label>
                                         <input type="text" name="telefono" class="form-control" placeholder="Numero telefonico" value="{{ old('telefono') }}">
                                 </div>
-                                <div class="form-group col-xs-6">
-                                        <label for="e-mail">E-mail</label>
-                                        <input type="text" name="e-mail" class="form-control" placeholder="ejemplo@correo.com" value="{{ old('e-mail') }}">
+                                <div class="form-group col-xs-2">
+                                        <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#TelefonoModal" value="+" />
                                 </div>
-                                
+                                <div class="form-group col-xs-4">
+                                        <label for="email">E-mail</label>
+                                        <input type="text" name="email" class="form-control" placeholder="ejemplo@correo.com" value="{{ old('e-mail') }}">
+                                        
+                                </div>
+                                <div class="form-group col-xs-2">
+                                        <input  type="button" class="btn btn-primary" data-toggle="modal" data-target="#EmailModal" value="+" />
+                                </div>                               
+                                         
                         </div>
                 </div>
+              
+              <!-- Modal Email -->
+              <div class="modal fade" id="EmailModal" tabindex="-1" role="dialog" aria-labelledby="EmailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="EmailModalLabel">E-mail</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                            {{-- formulario para agregar mas numeros telefonicos --}}
+                            <div class="form-group col-xs-10">
+                                <div id="div_1">
+                                        <input  type="text" class="form-control"  id="materiales1"/>
+                                        <input class="btn btn-primary bt_plus" id="1" type="button" value="+" />
+                                        <div class="error_form"></div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal Number -->
+              <div class="modal fade" id="TelefonoModal" tabindex="-1" role="dialog" aria-labelledby="TelefonoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="TelefonoModalLabel">Telefono</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                    {{-- formulario para agregar mas numeros telefonicos --}}
+                                    <div class="form-group col-xs-10">
+                                        <div id="div_1">
+                                                <input  type="text" class="form-control"  id="materiales1"/>
+                                                <input class="btn btn-primary bt_plus" id="1" type="button" value="+" />
+                                                <div class="error_form"></div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                {{-- <div class="panel panel-primary">
+                        <div class="panel-heading">Infomacion Académica</div>
+                                <div class="panel-body">
+                                        <div id="stylized" class="myform" style="margin:20px auto;">
+                                                        
+                                                         
+                                                        <div id="div_1">
+                                                        <input  type="text"   id="materiales1" style="width:200px;" />
+                                                        <input class="bt_plus" style="width:40px;" id="1" type="button" value="+" />
+                                                        <div class="error_form"></div>
+                                                        </div>
+                                                         
+                                                         
+                                                         
+                                                         
+                                                        <button type="submit" class="boton">Save</button>
+                                                        <div class="spacer"></div>
+                                </div>
+                </div> --}}
         <div class="form-group">
             <button class="btn btn-primay" type="submit">Guardar</button>
             <button class="btn btn-danger" type="reset">Cancelar</button>

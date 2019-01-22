@@ -26,7 +26,8 @@ class Workers extends Model
         'profession',
         'job_title_id',
         'vacation',
-        'telefono'        
+        'telefono',
+        'email'       
 
     ];
 
@@ -38,4 +39,14 @@ class Workers extends Model
     {
         return $this->belongsTo('App\job_titles','job_title_id'); 
     }
-}
+
+    public function ContactEmailName()
+    {
+        return $this->belongsTo('App\contact_email','email'); 
+    }
+
+    public function ContactNumberName()
+    {
+        return $this->belongsTo('App\contact_number','telefono'); 
+    }
+} 

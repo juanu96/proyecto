@@ -9,6 +9,8 @@ use App\Http\Requests\Work_areaRequest;
 use App\Http\Requests\WorkersRequest;
 use App\Work_area as work_area; 
 use App\job_titles as job_title;
+use App\Contact_email as email;
+use App\Contact_number as number;
 use App\Workers as Worker;
 use Carbon\Carbon;
 use DataTables;
@@ -23,6 +25,7 @@ class WorkersController extends Controller
     {
         if($request)
         {
+
             $data=Worker::get();
             $datawa=work_area::get();
             $datajt=job_title::get();  
@@ -37,7 +40,9 @@ class WorkersController extends Controller
     }
 
     public function store(WorkersRequest $request)
-    {
+    {   
+        $number = new number;
+        $email = new email;
         $worker = new Worker;
         $worker->name = $request->get('nombre');
         $worker->address = $request->get('dirección');
@@ -53,8 +58,16 @@ class WorkersController extends Controller
         $worker->profession = $request->get('profesión');
         $worker->job_title_id = $request->get('puesto_laboral');
         $worker->vacation = $request->get('vacaciones');
-        $worker->telefono = $request->get('telefono');
         $worker->save();
+
+        $email->email = $request->get('email');
+        $email->worker_id = $worker->id;   
+        $email->save(); 
+
+        $number->number = $request->get('telefono');
+        $number->worker_id = $worker->id;        
+        $number->save();
+
         return redirect::to('worker');
     }
 
@@ -65,16 +78,29 @@ class WorkersController extends Controller
 
     public function edit($id)
     {
-        
+
         $datawa=work_area::get();
         $worker = Worker::find($id);
         $datajt=job_title::get();
+        $datanumber=number::where("worker_id", "=", $id)->get();
+        $dataemail=email::where("worker_id", "=", $id)->get();
+
+        foreach($dataemail as $email){
+            $correo = $email->email;
+        }
+
+        foreach($datanumber as $number){
+            $numero = $number->number;
+        }
+
+        $worker->email = $correo;
+        $worker->telefono = $numero;
+        
         $puesto_laboral = job_title::find($worker->job_title_id);
        
         $datajt->WorkAreaName = $puesto_laboral->WorkAreaName->name;
         $datajt->salary = $puesto_laboral->salary;
-        $datajt->subtotal = $datajt->salary + $worker->viatic;
-      
+        $datajt->subtotal = $datajt->salary + $worker->viatic;      
         
         $fecha_actual = Carbon::now();
         $fecha_antigua = Carbon::parse($worker->enroll);
@@ -84,9 +110,29 @@ class WorkersController extends Controller
         return view("worker.edit",compact('worker', 'datajt', 'datawa'));  
     }
 
-    public function update(WorkersRequest $request,$id)
+    public function update(WorkersRequest $request, $id)
     {
-        $worker=Worker::findOrFail($id);
+
+        $datanumber=number::where("worker_id", "=", $id)->get();
+        $dataemail=email::where("worker_id", "=", $id)->get();
+
+        foreach($dataemail as $email){
+            $correo_id = $email->id;
+        }
+
+        foreach($datanumber as $number){
+            $numero_id = $number->id;
+        }
+
+        $numero = number::findOrFail($numero_id);
+        $numero->number = $request->get('telefono');
+        $numero->update();
+
+        $email = email::findOrFail($correo_id);
+        $email->email = $request->get('email');
+        $email->update();
+
+        $worker = Worker::findOrFail($id);
         $worker->name = $request->get('nombre');
         $worker->address = $request->get('dirección');
         $worker->id_card = $request->get('cédula');      
@@ -101,7 +147,7 @@ class WorkersController extends Controller
         $worker->profession = $request->get('profesión');
         $worker->job_title_id = $request->get('puesto_laboral');
         $worker->vacation = $request->get('vacaciones');
-        $worker->update();     
+        $worker->update();
 
         return redirect::to('worker');
     }

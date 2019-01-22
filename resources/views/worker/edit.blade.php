@@ -157,12 +157,12 @@
                                 <input type="text" name="dirección" class="form-control" placeholder="Dirección" value="{{$worker->address}}">
                         </div>
                         <div class="form-group col-xs-6">
-                                <label for="numero_telefonico">N° Telefonico</label>
-                                <input type="text" name="numero_telefonico" class="form-control" placeholder="Numero telefonico" value="">
+                                <label for="telefono">N° Telefonico</label>
+                                <input type="text" name="telefono" class="form-control" placeholder="Numero telefonico" value="{{$worker->telefono}}">
                         </div>
                         <div class="form-group col-xs-6">
-                                <label for="e-mail">E-mail</label>
-                                <input type="text" name="e-mail" class="form-control" placeholder="ejemplo@correo.com" value="">
+                                <label for="email">E-mail</label>
+                                <input type="text" name="email" class="form-control" placeholder="ejemplo@correo.com" value="{{$worker->email}}">
                         </div>
                 </div>
         </div>
@@ -170,7 +170,7 @@
         
         <div class="form-group">
             <button class="btn btn-primay" style="margin-right:10px" type="submit">Editar</button>
-            <a href="worker"><button class="btn btn-danger" type="btn">Cancelar</button></a>
+            <button class="btn btn-danger workerjs" type="btn">Cancelar</button>
             
         </div>
         {!!Form::close()!!}
