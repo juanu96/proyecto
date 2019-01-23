@@ -84,17 +84,30 @@ class WorkersController extends Controller
         $datajt=job_title::get();
         $datanumber=number::where("worker_id", "=", $id)->get();
         $dataemail=email::where("worker_id", "=", $id)->get();
-
+        
+        $telefonos = array();
+        foreach($datanumber as $t){
+        $telefonos[] = $t->number; 
+        }
+            return  $telefonos;
+            
+            
+        
         foreach($dataemail as $email){
+            $correo_id = $email->id;
             $correo = $email->email;
         }
 
-        foreach($datanumber as $number){
+        /* foreach($datanumber as $number){
+            $numero_id = $number->id;
             $numero = $number->number;
         }
+        */
 
+        $worker->email_id = $correo_id;
+        //$worker->telefono_id = $numero_id;
         $worker->email = $correo;
-        $worker->telefono = $numero;
+        $worker->telefono = $telefonos;
         
         $puesto_laboral = job_title::find($worker->job_title_id);
        
