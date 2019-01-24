@@ -19,7 +19,7 @@
             </ul>
         </div>
         @endif
-        <div>
+            <div>
                 <form id="workareaform">
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" id="idAT">

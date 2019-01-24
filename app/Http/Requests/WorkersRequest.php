@@ -37,9 +37,7 @@ class WorkersRequest extends FormRequest
             'nivel_academico'=>'required|max:255',
             'profesión'=>'required|max:255',
             'puesto_laboral'=>'required|numeric|max:10',
-            'vacaciones'=>'between:0,99999.99',
-            'telefono'=>'required|max:11',
-            'email'=>'required|max:255|email'
+            'vacaciones'=>'between:0,99999.99'            
         ];
     }
 }

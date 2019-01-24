@@ -95,21 +95,101 @@
     $("#work_area_idjt").val(work_area_id);
     }
 
+    /* elimnar numero Worker */
+    function deletenumber() {
+        /* $(this).attr('data-id') obtenemos el id de el elemento que
+   queremeos eliminar a traves de la funcion bind */
+       var id = $(this).attr('data-id');
+       var url = '/number/' + id;//asignamos la url mas id que tiene que buscar para eliminar
+       var res = delete_data(url);//a la funcion delete_data le mandamos la url para que ejecute el ajax y elimine
+       if (res !== null) {//verificamos que la respuesta no sea nula
+           var data = $('#tabla_telefonos').find('tbody').find("tr[data-item='" + id + "']");//buscamos el elemento que queremos eliminar en nuestra tabla usando el id
+           console.log(id);
+           data.remove()// usamos la funcion remove() para quitar el elemento buscado de nuestra tabla
+           console.log(data);            
+       }
+   }
+
+           /* editar numero trabajador */
+           function editnumber() {
+            $("#numberedit").removeClass("hide");
+            $(".cancelar").removeClass("hide");
+            $("#guardarnumber").addClass("hide"); 
+            $(this).parents("tr").find("td:eq(0)").each(function(){
+                number=$(this).html();                
+            });
+            var id = $(this).attr('data-id');
+            $("#number").val(number);        
+            $("#idnumber").val(id);
+            }
+    //-----------------------fin funciones Bind---------------------------------------------------------------------
+
     /*  //-----------Workers----------------------------------------------------------------------------------------------------   */
-        /* //Metodo crear email, number workers */
-        $("#formularioAT").on("submit", function(e){            
+        /* //Metodo crear number workers */
+        $("#formularioworkernumber").on("submit", function(e){            
             e.preventDefault(); 
-            var form = $(this);
+            var form = $(this);            
             var formData = new FormData(form[0]);
-            var url = '/worker';
+            var url = '/number';
             var type = 'POST';
 
             var res = postData(formData, url, type);
             if (res !== null) {
-                console.log(res);
+                var	row ='<tr data-item="'+res.id+'">'+
+                '<td class="workernumber">'+res.number+'</td>' +
+                '<td>'+
+                '<a href="#" class="glyphicon glyphicon-pencil editarat_1" aria-hidden="true" name="editar" data-id="'+res.id+'" data-name="'+res.number+'"></a>'+
+                '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash numberdelete" aria-hidden="true" style="margin-left: 20px" data-id="'+res.id+'"></a>'+
+                '</td>'+
+                '</tr>';
+                $("#tabla_telefonos tr:last").after(row);   
+                $("#formularioworkernumber")[0].reset();                            
+                $(".numberdelete").bind("click", deletenumber);
+                $(".editarat_1").bind("click", editnumber);
             }
         });
 
+        /*  //Metodo actualizar numero de trabajadores */
+        $("#numberedit").on("click", function(e){
+            e.preventDefault(); 
+            
+            var form = $('#formularioworkernumber');
+            var id = form.find($('#idnumber')).val();
+            var number = form.find($('#number'));
+            var worker_id = form.find($('#worker_id'));
+            var formData = {
+                _token: token,
+                number: number.val(),
+                worker_id: worker_id.val()
+            };
+            console.log(id);
+            var url = '/number/' + id;
+            var type = "PUT";
+            var res = post_form(formData, url, type);
+            if (res !== null) {
+                var data = $('#tabla_telefonos').find('tbody').find("tr[data-item='" + id + "']");
+                console.log(data);
+                $(data.find(".workernumber")).html(res.number);
+                $("#guardarnumber").removeClass("hide");
+                $("#numberedit").addClass("hide");
+                $(".cancelar").addClass("hide");
+                $("#formularioworkernumber")[0].reset();      
+            }
+                    
+            });
+
+        /*  //Metodo eliminar para numeros de trabajadores */
+        $(".numberdelete").on("click", function(e){  
+            var id = $(this).attr('data-id');
+            var url = '/number/' + id;
+            var res = delete_data(url);
+            if (res !== null) {
+                var data = $('#tabla_telefonos').find('tbody').find("tr[data-item='" + id + "']");
+                data.remove();
+            }   
+        
+        });
+       
  /*  //----------------------Work Areas-----------------------------------------------------------------------------------------   */
         /* //Metodo crear para areas de trabajo */
         $("#formularioAT").on("submit", function(e){            
@@ -412,14 +492,16 @@ $(function() {
         $("#editarAT").addClass("hide");
         $(".cancelar").addClass("hide");
         $("#formularioAT")[0].reset(); 
-        $("#formulariojt")[0].reset();           
+        $("#formulariojt")[0].reset();    
     }); 
 
     $(".cancelar").click(function(){
         $("#guardarAT").removeClass("hide");
         $(".guardarjt").removeClass("hide");
+        $("#guardarnumber").removeClass("hide");
         $("#editarAT").addClass("hide");
         $(".editarjt").addClass("hide");
+        $("#numberedit").addClass("hide");
         $(".cancelar").addClass("hide");
         $("#formularioAT")[0].reset();     
         $("#formulariojt")[0].reset();       
@@ -441,6 +523,19 @@ $(function() {
         $("#idAT").val(id);
         $("#nameAT").val(name);
         $("#descriptionAT").val(description);          
+    });
+
+    $(".numberedit1").click(function(){
+        $("#numberedit").removeClass("hide");
+        $(".cancelar").removeClass("hide");
+        $("#guardarnumber").addClass("hide"); 
+        $(this).parents("tr").find("td:eq(0)").each(function(){
+            number=$(this).html();                
+        });
+        var id = $(this).attr('data-id');
+        $("#number").val(number);        
+        $("#idnumber").val(id);
+                 
     });
 
     

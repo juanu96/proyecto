@@ -79,36 +79,14 @@ class WorkersController extends Controller
     public function edit($id)
     {
 
-        $datawa=work_area::get();
+        $datawa = work_area::get();
         $worker = Worker::find($id);
-        $datajt=job_title::get();
-        $datanumber=number::where("worker_id", "=", $id)->get();
-        $dataemail=email::where("worker_id", "=", $id)->get();
-        
-        $telefonos = array();
-        foreach($datanumber as $t){
-        $telefonos[] = $t->number; 
-        }
-            return  $telefonos;
-            
-            
-        
-        foreach($dataemail as $email){
-            $correo_id = $email->id;
-            $correo = $email->email;
-        }
+        $datajt = job_title::get();
 
-        /* foreach($datanumber as $number){
-            $numero_id = $number->id;
-            $numero = $number->number;
-        }
-        */
-
-        $worker->email_id = $correo_id;
-        //$worker->telefono_id = $numero_id;
-        $worker->email = $correo;
-        $worker->telefono = $telefonos;
-        
+        foreach ($worker->ContactNumbers as $contact) {
+            $worker->numbers = $contact->number . ", " . $worker->numbers;
+        }        
+     
         $puesto_laboral = job_title::find($worker->job_title_id);
        
         $datajt->WorkAreaName = $puesto_laboral->WorkAreaName->name;
@@ -125,26 +103,6 @@ class WorkersController extends Controller
 
     public function update(WorkersRequest $request, $id)
     {
-
-        $datanumber=number::where("worker_id", "=", $id)->get();
-        $dataemail=email::where("worker_id", "=", $id)->get();
-
-        foreach($dataemail as $email){
-            $correo_id = $email->id;
-        }
-
-        foreach($datanumber as $number){
-            $numero_id = $number->id;
-        }
-
-        $numero = number::findOrFail($numero_id);
-        $numero->number = $request->get('telefono');
-        $numero->update();
-
-        $email = email::findOrFail($correo_id);
-        $email->email = $request->get('email');
-        $email->update();
-
         $worker = Worker::findOrFail($id);
         $worker->name = $request->get('nombre');
         $worker->address = $request->get('dirección');
@@ -167,7 +125,9 @@ class WorkersController extends Controller
 
     public function destroy($id)
     {
-        Worker::destroy($id);
+        
+        $worker = Worker::findOrFail($id);
+        $worker->delete();
 
         return redirect::to('worker');
 

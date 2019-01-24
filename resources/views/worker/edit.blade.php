@@ -158,7 +158,7 @@
                         </div>
                         <div class="form-group col-xs-4">
                                 <label for="telefono">N° Telefonico</label>
-                                <input type="text" name="telefono" class="form-control" placeholder="Numero telefonico" value="">
+                        <input type="text" name="telefono" class="form-control" placeholder="Numero telefonico" value="{{$worker->numbers}}" readonly>
                         </div>
                         <div class="form-group col-xs-2">
                                 <b>Añadir <br/></b>
@@ -193,19 +193,9 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                            {{-- formulario para agregar mas numeros telefonicos --}}
-                            {{-- @foreach ($worker as $item)
+                            
                         
-                                <tr data-item="{{$item->id}}">
-                                <td>{{$item->id}}</td>
-                                <td class="telefono">{{$itemjt->telefono}}</td>
-                                <td>
-                                        <a href="#" class="glyphicon glyphicon-pencil editarjt_1 "aria-hidden="true" name="editar" data-id="" data-name=""></a>
-                                        <a href="#" data-toggle="modal"  class="glyphicon glyphicon-trash eliminar_jt" aria-hidden="true" style="margin-left: 20px" data-id="" data-name=""></a>
-                                </td>                   
-                                </tr> 
-                        
-                             @endforeach --}}
+                             
                             
                     </div>
                     <div class="modal-footer">
@@ -215,29 +205,10 @@
                 </div>
               </div>
 
-              <!-- Modal Number -->
-              <div class="modal fade" id="TelefonoModal" tabindex="-1" role="dialog" aria-labelledby="TelefonoModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="TelefonoModalLabel">Telefono</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                                    {{-- formulario para agregar mas numeros telefonicos --}}
-                                    
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
         {!!Form::close()!!}
     </div>
 </div>
-
+@include('worker.modaltelefonoedit')
 
 @endsection

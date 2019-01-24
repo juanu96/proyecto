@@ -3,14 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Workers extends Model
 {
+    use SoftDeletes;
+
     protected $table='workers';
 
     protected $primaryKey='id';
 
-    public $timestamps=false;
+    public $timestamps=true;
 
     protected $fillable =[
 
@@ -33,20 +37,22 @@ class Workers extends Model
 
     protected $dates = [
         'enroll', 
-        'birth'        
+        'birth',
+        'deleted_at'         
     ];
+
     public function JobTitleName()
     {
         return $this->belongsTo('App\job_titles','job_title_id'); 
     }
 
-    public function ContactEmailName()
+    public function ContactNumbers()
     {
-        return $this->belongsTo('App\contact_email','email'); 
+        return $this->hasMany('App\Contact_number','worker_id', 'id');
     }
-
-    public function ContactNumberName()
+    
+    public function ContactEmails()
     {
-        return $this->belongsTo('App\contact_number','telefono'); 
+        return $this->hasMany('App\Contact_email','worker_id', 'id');
     }
 } 
