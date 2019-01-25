@@ -18,7 +18,7 @@
                 </ul>
             </div>
             @endif
-              <form id="jobtitleform">                
+              {{-- <form id="jobtitleform"> --}}                
                   {{-- <input type="hidden" name="_token" id="tokenjt" value="{{ csrf_token() }}"> --}}
                   <input type="hidden" name="id" id="idjt">
                   {{-- input name --}}                  

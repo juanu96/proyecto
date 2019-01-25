@@ -27,6 +27,7 @@ Route::resource('job_title', 'job_titlesController');
 
 Route::resource('number','Contact_numberController');
 
+Route::resource('email','Contact_emailController');
 
 Route::POST('worker/savewa','WorkersController@savewa');
 

@@ -20,7 +20,7 @@
         </div>
         @endif
             <div>
-                <form id="workareaform">
+               {{--  <form id="workareaform"> --}}
                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" id="idAT">
                 <div class="form-group">

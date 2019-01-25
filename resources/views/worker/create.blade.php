@@ -158,61 +158,8 @@
                                 </div>                               
                                          
                         </div>
-                </div>
-              
-              <!-- Modal Email -->
-              <div class="modal fade" id="EmailModal" tabindex="-1" role="dialog" aria-labelledby="EmailModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="EmailModalLabel">E-mail</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                            {{-- formulario para agregar mas numeros telefonicos --}}
-                            <div class="form-group col-xs-10">
-                                <div id="div_1">
-                                        <input  type="text" class="form-control"  id="materiales1"/>
-                                        <input class="btn btn-primary bt_plus" id="1" type="button" value="+" />
-                                        <div class="error_form"></div>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Modal Number -->
-              <div class="modal fade" id="TelefonoModal" tabindex="-1" role="dialog" aria-labelledby="TelefonoModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="TelefonoModalLabel">Telefono</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                                    {{-- formulario para agregar mas numeros telefonicos --}}
-                                    <div class="form-group col-xs-10">
-                                        <div id="div_1">
-                                                <input  type="text" class="form-control"  id="materiales1"/>
-                                                <input class="btn btn-primary bt_plus" id="1" type="button" value="+" />
-                                                <div class="error_form"></div>
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                </div>              
+             
                 {{-- <div class="panel panel-primary">
                         <div class="panel-heading">Infomacion Académica</div>
                                 <div class="panel-body">
@@ -239,5 +186,6 @@
         {!!Form::close()!!}
     </div>
 </div>
-
+@include('worker.modaltelefonocreate')
+@include('worker.modalemailcreate')
 @endsection

@@ -166,7 +166,7 @@
                         </div>
                         <div class="form-group col-xs-4">
                                 <label for="email">E-mail</label>
-                                <input type="text" name="email" class="form-control" placeholder="ejemplo@correo.com" value="{{$worker->email}}">
+                                <input type="text" name="email" class="form-control" placeholder="ejemplo@correo.com" value="{{$worker->emails}}" readonly>
                         </div>
                         <div class="form-group col-xs-2">
                                 <b>Añadir <br/></b>
@@ -182,33 +182,11 @@
             
         </div>
 
-         <!-- Modal Email -->
-         <div class="modal fade" id="EmailModal" tabindex="-1" role="dialog" aria-labelledby="EmailModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="EmailModalLabel">E-mail</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                            
-                        
-                             
-                            
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
+         
         {!!Form::close()!!}
     </div>
 </div>
 @include('worker.modaltelefonoedit')
+@include('worker.modalemailedit')
 
 @endsection

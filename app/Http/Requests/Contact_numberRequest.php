@@ -24,7 +24,7 @@ class Contact_numberRequest extends FormRequest
     public function rules()
     {
         return [ 
-            "number" => "required|max:8|numeric|unique:contact_numbers,number"
+            "number" => "required|max:99999999|min:10000000|numeric|unique:contact_numbers,number"
         ];
     }
 
@@ -33,6 +33,7 @@ class Contact_numberRequest extends FormRequest
         return [
             'number.required' => 'Debes agregar un numero telefonico.',
             'number.max' => 'Te has pasado de caracteres, solo 8.',
+            'number.min' => 'Te faltan caracteres, tiene que ser 8.',
             'number.numeric' => 'Solo puedes agregar numeros',
             'number.unique' => 'Este numero telefonico ya existe'
             

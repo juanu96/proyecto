@@ -25,7 +25,6 @@ class WorkersController extends Controller
     {
         if($request)
         {
-
             $data=Worker::get();
             $datawa=work_area::get();
             $datajt=job_title::get();  
@@ -36,7 +35,10 @@ class WorkersController extends Controller
     public function create()
     {
         $datajt=job_title::get();
-        return view("worker.create",compact('datajt'));
+        $data=Worker::get();
+        $ultimo = 1 + $data->last()->id;
+        $data->ultimo = $ultimo;
+        return view("worker.create",compact('datajt','data'));
     }
 
     public function store(WorkersRequest $request)
@@ -86,7 +88,11 @@ class WorkersController extends Controller
         foreach ($worker->ContactNumbers as $contact) {
             $worker->numbers = $contact->number . ", " . $worker->numbers;
         }        
-     
+
+        foreach ($worker->ContactEmails as $correo) {
+            $worker->emails = $correo->email . ", " . $worker->emails;
+        }  
+        
         $puesto_laboral = job_title::find($worker->job_title_id);
        
         $datajt->WorkAreaName = $puesto_laboral->WorkAreaName->name;
