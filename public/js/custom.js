@@ -654,7 +654,6 @@ $(function() {
 
     
     $(".select2js").select2({
-        placeholder: "Selecciona un departamento",
         language: {
 
             noResults: function() {

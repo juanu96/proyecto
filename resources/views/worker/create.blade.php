@@ -140,7 +140,7 @@
                                         <label for="address">Dirección</label>
                                         <input type="text" name="dirección" class="form-control" placeholder="Dirección" value="{{ old('dirección') }}">
                                 </div>
-                                </div>
+                                {{-- </div>
                                 <div class="form-group col-xs-4">
                                         <label for="telefono">N° Telefonico</label>
                                         <input type="text" name="telefono" class="form-control" placeholder="Numero telefonico" value="{{ old('telefono') }}">
@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="form-group col-xs-2">
                                         <input  type="button" class="btn btn-primary" data-toggle="modal" data-target="#EmailModal" value="+" />
-                                </div>                               
+                                </div>  --}}                              
                                          
                         </div>
                 </div>              
@@ -186,6 +186,6 @@
         {!!Form::close()!!}
     </div>
 </div>
-@include('worker.modaltelefonocreate')
-@include('worker.modalemailcreate')
+{{-- @include('worker.modaltelefonocreate')
+@include('worker.modalemailcreate') --}}
 @endsection

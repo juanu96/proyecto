@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
-
-//use Iluminate\Support\Facades\Redirect;
 use App\Http\Requests\Work_areaRequest;
 use App\Http\Requests\WorkersRequest;
 use App\Work_area as work_area; 
@@ -36,15 +34,14 @@ class WorkersController extends Controller
     {
         $datajt=job_title::get();
         $data=Worker::get();
-        $ultimo = 1 + $data->last()->id;
+        /* $ultimo = 1 + $data->last()->id;
         $data->ultimo = $ultimo;
+        dd($data); */
         return view("worker.create",compact('datajt','data'));
     }
 
     public function store(WorkersRequest $request)
     {   
-        $number = new number;
-        $email = new email;
         $worker = new Worker;
         $worker->name = $request->get('nombre');
         $worker->address = $request->get('dirección');
@@ -61,14 +58,6 @@ class WorkersController extends Controller
         $worker->job_title_id = $request->get('puesto_laboral');
         $worker->vacation = $request->get('vacaciones');
         $worker->save();
-
-        $email->email = $request->get('email');
-        $email->worker_id = $worker->id;   
-        $email->save(); 
-
-        $number->number = $request->get('telefono');
-        $number->worker_id = $worker->id;        
-        $number->save();
 
         return redirect::to('worker');
     }

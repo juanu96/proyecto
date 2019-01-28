@@ -118,12 +118,19 @@ return [
             'text'        => 'Trabajadores',
             'url'         => 'worker',
             'icon'        => 'user',
+            /* 'submenu' => [
+                [
+                'text'        => 'Faltas',
+                'url'         => 'faltas',
+                'icon'        => 'user',
+                ],
+            ], */
         ],
         [
-            'text'        => 'Otro',
-            'url'         => 'admin/pages',
+            'text'        => 'Incidencias Laborales',
+            'url'         => 'incidencias',
             'icon'        => 'user',
-        ],
+        ], 
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',

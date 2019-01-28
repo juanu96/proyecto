@@ -29,6 +29,8 @@ Route::resource('number','Contact_numberController');
 
 Route::resource('email','Contact_emailController');
 
+Route::resource('incidencias','absencesController');
+
 Route::POST('worker/savewa','WorkersController@savewa');
 
 

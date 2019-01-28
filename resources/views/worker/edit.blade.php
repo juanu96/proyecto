@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group col-xs-3">
                                         <label for="birth">Cumpleaños</label>
-                                        <input type="text" name="cumpleaños" class="form-control" placeholder="Cumpleaños" value="{{$worker->birth->format('d/m/Y')}}">
+                                        <input type="text" name="cumpleaños" class="form-control datepickerjs" placeholder="Cumpleaños" value="{{$worker->birth->format('d/m/Y')}}">
                                 </div>   
                                 <div class="form-group col-xs-3">
                                         <label for="Edad">Edad</label>

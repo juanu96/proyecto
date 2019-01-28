@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"> 
+    {{-- File input --}}
+    <link rel="stylesheet" href="{{ asset('public/css/fileinput.min.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('public/js/fileinput.js') }}">        
        
     @if(config('adminlte.plugins.select2'))
         <!-- Select2 -->
@@ -55,6 +58,7 @@
 <script src="{{asset('js/jquery.form.js')}}"></script>
 <script src="{{asset('bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
 <script src="{{asset('bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js')}}"></script>
+<script src="{{asset('js/fileinput.min.js')}}"></script>
 
 
 
