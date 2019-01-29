@@ -148,6 +148,60 @@
             }
     //-----------------------fin funciones Bind---------------------------------------------------------------------
 
+    /* ----------------------Absences------------------------------------------------------------------------------------------- */
+    $('#selectrabajador').change(function () {
+        var id = this.options[this.selectedIndex].value;
+        $('.trabajador_id').val(id);
+        console.log(id);
+    });
+
+    $("#ausencia").on("click", function(e){  
+    e.preventDefault();
+
+    $("#tbodyausencia").find("tr:gt(1)").remove();
+
+    var id = $(".trabajador_id").val();
+    var url = "/incidencias/" + id;
+    var res = getData(url);
+    console.log(res);
+    $.each(res, function (key, value) {
+        console.log(value);
+
+        var justif = null;
+        if (value.justified == 1) {
+            justif = 'Si';
+        } else {
+            justif = 'No';
+        }
+        var file = null;
+        if (value.file == null) {
+            file = 'no';
+        } else {
+            file = 'si';
+        }
+
+        var row = "<tr data-item='"
+            + value.id + "'>+" +
+            "<td class='abs-id'>" + value.id + "</td>" +
+            "<td class='abs_fecha'>" + value.date + "</td>" +
+            "<td class='abs_justificado'>" + justif + "</td>" +
+            "<td class='abs_horas'>" + value.quantity + "</td>" +
+            "<td class='abs_comentario'>" + value.observation +
+            "<td class='abs_respaldo'>" + file + "</td>" +
+            '<td>'+
+            '<a href="#" class="glyphicon glyphicon-pencil" aria-hidden="true" name="editar" data-id="'+value.id+'"></a>'+
+            '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
+            '</td>'+
+            "</tr>";
+            $("#tbodyausencia tr:last").after(row);
+        });
+
+    });
+
+    
+
+
+
     /*  //-----------Workers----------------------------------------------------------------------------------------------------   */
         
             /* //Metodo crear email workers */
@@ -468,7 +522,33 @@ $("#editarjt").on("click", function(e){
     });
 
   
-  /* //----------------------------------------------------------------------------------------------------------- */
+  /* //----------------------------------------Funcioines ajax------------------------------------------------------- */
+
+  /* Obtener valores */
+  function getData(url) {
+    var array = {};
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': token},
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        success: function (res) {
+            array = res.data;
+            $.notify(res.message, success_opt);
+        },
+        error: function (res) {
+            console.log(res);
+            if (res) {
+                $.notify(res.responseJSON.message, error_opt);
+            } else {
+                $.notify('Error desconocido', error_opt);
+            }
+        },
+        async: false
+    });
+
+    return array;
+}
   
   /*Enviar sin submit*/
   function post_form(formData, url, type) {

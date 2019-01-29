@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\absences as absences;
 use App\Workers as Worker;
@@ -54,8 +53,18 @@ class absencesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {         
+        $date = new Carbon();
+        try {
+            $data = absences::where('worker_id', $id)
+                ->orderBy('date', 'DESC')
+                ->get();
+            return response(['success' => true, 'data' => $data], 201)
+                ->header('Content-Type', 'text/plain');
+        } catch (\Exception $ex) {
+            return response(['success' => false, 'message' => 'Por favor intente de nuevo, codigo de error: ' . $ex->getCode()], 400)
+                ->header('Content-Type', 'text/plain');
+        }
     }
 
     /**
