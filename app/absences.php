@@ -10,7 +10,7 @@ class absences extends Model
     
     protected $primariKey='id';
 
-    public $timestamps=false;
+    public $timestamps=true;
 
     protected $fillable=[
         'worker_id',
@@ -24,5 +24,9 @@ class absences extends Model
     protected $dates = [
         'date'         
     ];
+
+    public function backup(){
+        return $this->belongsTo('App\Files','file', 'id');
+    }
 
 }

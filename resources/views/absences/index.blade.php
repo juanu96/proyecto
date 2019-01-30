@@ -10,7 +10,7 @@
 <div class="col col-lg-12 col-md-12 col-sm-12">
 
     <div class="col col-lg-6 col-md-6 col-sm-6">
-        <label for="trabajador">Trabajador</label>
+        
         <select name="trabajador" class="form-control select2js" id="selectrabajador">
             <option value="" disabled selected>selecciona un trabajador</option>                                                                             
             @foreach ($dataw as $itemw)                             
@@ -20,8 +20,8 @@
     </div>
 
     <div class="col col-lg-6 col-md-6 col-sm-6">
-        <input type="hidden" name="id" class="form-control trabajador_id" id="" placeholder="" value="{{ old('date') }}">
-        <div class="text-left" style="margin-top:5%">
+        
+        <div class="text-left" >
             <div id="fault-btn" class="btn-group">
                 <a class="btn btn-primary" id="ausencia">Ausencia</a>
                 <a class="btn btn-primary" id="minutos">Minutos Tarde</a>
@@ -38,19 +38,24 @@
     <div id="vista_ausencia">
         {{------------------- formulario ------------------}}
         <div class="col-xs-6" style="margin-top:5%">
+            <form id="formularioausencia">
+                <div class="form-group">
+                    <input type="text" name="ausencia_id" class="form-control">
+                    <input type="hidden" name="worker_id" class="form-control trabajador_id">
+                </div>
                 <div class="form-group col-xs-6">
                         <label for="date">Fecha</label>
-                        <input type="text" name="date" class="form-control datepickerjs" id="" placeholder="" value="{{ old('date') }}">
+                        <input type="text" name="date" class="form-control datepickerjs" id="fechaA">
                 </div>
 
                 <div class="form-group col-xs-6">
-                        <label for="cthoras">Cantidad en Horas</label>
-                        <input type="text" name="cthoras" class="form-control" id="" placeholder="" value="{{ old('cthoras') }}">
+                        <label for="quantity">Cantidad en Horas</label>
+                        <input type="text" name="quantity" class="form-control" id="quantityA">
                 </div>
 
                 <div class="form-group col-xs-12">
-                    <label for="comment">Comentario</label>
-                    <textarea class="form-control" rows="5" style="resize:vertical" id="comment"></textarea>
+                    <label for="observation">Comentario</label>
+                    <textarea class="form-control" name="observation" rows="5" style="resize:vertical" id="observationA"></textarea>
                 </div>            
                 
                 <div class="form-group col-xs-12">
@@ -58,13 +63,15 @@
                 </div>
 
                 <div class="checkbox col-xs-6">
-                    <label><input type="checkbox" value="1">Falta Justificada </label>
+                    <label><input type="checkbox" name="justified" value="1">Falta Justificada </label>
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primay" style="margin-right:10px" type="submit">Guardar</button>
-                    
+                    <button class="btn btn-primay" style="margin-right:10px" id="guardarausencia" type="submit">Guardar</button>
+                    <button class="btn btn-primay hide editarjt" id="editarausencia" type="submit">Editar</button>     
+                    <button class="btn btn-danger hide cancelar" type="reset">Cancelar</button>                    
                 </div>
+            </form>
 
             </div>
         {{------------------- tabla -----------------------}}

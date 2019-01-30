@@ -146,15 +146,32 @@
             $("#email").val(email);        
             $("#idemail").val(id);
             }
+
+            function deleteausencia() {
+                /* $(this).attr('data-id') obtenemos el id de el elemento que
+           queremeos eliminar a traves de la funcion bind */
+               var id = $(this).attr('data-id');
+               var url = '/incidencias/' + id;//asignamos la url mas id que tiene que buscar para eliminar
+               var res = delete_data(url);//a la funcion delete_data le mandamos la url para que ejecute el ajax y elimine
+               if (res !== null) {//verificamos que la respuesta no sea nula
+                   var data = $('#tbodyausencia').find('tbody').find("tr[data-item='" + id + "']");//buscamos el elemento que queremos eliminar en nuestra tabla usando el id
+                   console.log(id);
+                   data.remove()// usamos la funcion remove() para quitar el elemento buscado de nuestra tabla
+                   console.log(data);            
+               }
+           }
     //-----------------------fin funciones Bind---------------------------------------------------------------------
 
-    /* ----------------------Absences------------------------------------------------------------------------------------------- */
+    /* ----------------------Absences----------------------------------------------------------------------------- */
+    
+    
     $('#selectrabajador').change(function () {
         var id = this.options[this.selectedIndex].value;
         $('.trabajador_id').val(id);
         console.log(id);
     });
 
+    /* Metodo mostrar Ausencias */
     $("#ausencia").on("click", function(e){  
     e.preventDefault();
 
@@ -175,13 +192,12 @@
         }
         var file = null;
         if (value.file == null) {
-            file = 'no';
+            file = '-';
         } else {
             file = 'si';
         }
-
-        var row = "<tr data-item='"
-            + value.id + "'>+" +
+        
+        var row = "<tr data-item='" + value.id + "'>+" +
             "<td class='abs-id'>" + value.id + "</td>" +
             "<td class='abs_fecha'>" + value.date + "</td>" +
             "<td class='abs_justificado'>" + justif + "</td>" +
@@ -190,17 +206,102 @@
             "<td class='abs_respaldo'>" + file + "</td>" +
             '<td>'+
             '<a href="#" class="glyphicon glyphicon-pencil" aria-hidden="true" name="editar" data-id="'+value.id+'"></a>'+
-            '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
+            '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash deleteausencia" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
             '</td>'+
             "</tr>";
             $("#tbodyausencia tr:last").after(row);
         });
+        $(".deleteausencia").bind("click", deleteausencia);
 
     });
 
+        /* //Metodo crear Ausencia */
     
+        $("#formularioausencia").on("submit", function(e){            
+            e.preventDefault(); 
+            var form = $(this);            
+            var formData = new FormData(form[0]);
+            var url = '/incidencias';
+            var type = 'POST';
 
+            var res = postData(formData, url, type);
+            
+            if (res !== null) {
 
+                var justif = null;
+            if (res.justified == 1) {
+                justif = 'Si';
+            } else {
+                justif = 'No';
+            }
+            var file = null;
+            if (res.file == null) {
+                file = '-';
+            } else {
+                file = 'si';
+            }
+                console.log(res);
+                var row = "<tr data-item='" + res.id + "'>" +
+                "<td class='abs-id'>" + res.id + "</td>" +
+                "<td class='abs_fecha'>" + res.date + "</td>" +
+                "<td class='abs_justificado'>" + justif + "</td>" +
+                "<td class='abs_horas'>" + res.quantity + "</td>" +
+                "<td class='abs_comentario'>" + res.observation +
+                "<td class='abs_respaldo'>" + file + "</td>" +
+                '<td>'+
+                '<a href="#" class="glyphicon glyphicon-pencil editausencia" aria-hidden="true" name="editar" data-id="'+res.id+'"></a>'+
+                '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash deleteausencia" aria-hidden="true" style="margin-left: 20px" data-id="'+res.id+'"></a>'+
+                '</td>'+
+                "</tr>";
+                $("#tbodyausencia tr:last").after(row);  
+                $("#formularioausencia").trigger("reset");                            
+                $(".deleteausencia").bind("click", deleteausencia);
+                //$(".emailedit_1").bind("click", editemail); 
+            }
+        });
+
+        /*  //Metodo actualizar ausencias */
+        $("#editarausencia").on("click", function(e){
+            e.preventDefault(); 
+            
+            var form = $('#formularioausencia');
+            var id = form.find($('#worker_id')).val();
+            console.log(id);
+            var date = form.find($('#fechaA'));
+            var description = form.find($('#descriptionAT'));
+            var formData = {
+                _token: token,
+                date: date.val(),
+                description: description.val()
+            };
+
+            var url = '/work_area/' + id;
+            var type = "PUT";
+            var res = post_form(formData, url, type);
+            if (res !== null) {
+                var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+                console.log(data);
+                $(data.find(".waname")).html(res.name);
+                $(data.find(".wadescription")).html(res.description);
+                $("#guardarAT").removeClass("hide");
+                $("#editarAT").addClass("hide");
+                $(".cancelar").addClass("hide");
+                $("#formularioAT").trigger("reset");      
+            }
+                    
+            });
+
+         /* //Metodo Eliminar Ausencia */
+         $(".deleteausencia").on("click", function(e){  
+            var id = $(this).attr('data-id');
+            var url = '/incidencias/' + id;
+            var res = delete_data(url);
+            if (res !== null) {
+                var data = $('#tbodyausencia').find('tbody').find("tr[data-item='" + id + "']");
+                data.remove();
+            }   
+        
+        });
 
     /*  //-----------Workers----------------------------------------------------------------------------------------------------   */
         
@@ -544,7 +645,7 @@ $("#editarjt").on("click", function(e){
                 $.notify('Error desconocido', error_opt);
             }
         },
-        async: false
+        async: false,
     });
 
     return array;
@@ -654,8 +755,8 @@ $(function() {
         }},
        
     
-    });  
-     
+    });      
+
    
     
 });  
@@ -731,6 +832,33 @@ $(function() {
         $("#idemail").val(id);
                  
     });
+
+    $(".editausencia").click(function(){
+        $("#editarausencia").removeClass("hide");
+        $(".cancelar").removeClass("hide");
+        $("#guardarausencia").addClass("hide"); 
+        $(this).parents("tr").find("td:eq(0)").each(function(){
+            id=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(1)").each(function(){
+            date=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(2)").each(function(){
+            justif=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(3)").each(function(){
+            quantity=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(4)").each(function(){
+            observation=$(this).html();                
+        });
+        $(this).parents("tr").find("td:eq(5)").each(function(){
+            file=$(this).html();                
+        });
+        var id = $(this).attr('data-id');
+        $("#email").val(email);        
+        $("#idemail").val(id);
+    
 
     
     $(".select2js").select2({
