@@ -26,7 +26,7 @@ class absencesController extends Controller
     {
         $data = absences::get();
         $dataw = Worker::get();
-        
+
         return view("absences.index", compact('data','dataw'));
     }
 
@@ -65,7 +65,9 @@ class absencesController extends Controller
                 $data->justified = 0;
             }
             $data->save();  
-             
+            $date = new Carbon($data->date);
+    
+                $data->fecha = $date->format('d/m/Y');;
 
             return response(['success' => true, 'message' => 'Ausencia agregada correctamente, id:' . $data->id, 'data' => $data], 201)
                     ->header('Content-Type', 'text/plain');
@@ -81,11 +83,19 @@ class absencesController extends Controller
      */
     public function show($id)
     {         
-        $date = new Carbon();
+        
         try {
             $data = absences::where('worker_id', $id)
-                ->orderBy('date', 'DESC')
-                ->get();
+            ->get();
+
+            foreach ($data as $absence) {
+            
+            $date = new Carbon($absence->date);
+
+            $absence->fecha = $date->format('d/m/Y');
+
+        };
+
             return response(['success' => true, 'data' => $data], 201)
                 ->header('Content-Type', 'text/plain');
         } catch (\Exception $ex) {
@@ -112,7 +122,7 @@ class absencesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(absencesRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if($request->ajax())
         {
@@ -129,8 +139,12 @@ class absencesController extends Controller
             } else {
                 $data->justified = 0;
             }
-            $data->update();  
-             
+            $data->update();              
+            
+            
+                $date = new Carbon($data->date);
+    
+                $data->fecha = $date->format('d/m/Y');
 
             return response(['success' => true, 'message' => 'Ausencia actualizada correctamente, id:' . $data->id, 'data' => $data], 201)
                     ->header('Content-Type', 'text/plain');

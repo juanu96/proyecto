@@ -40,12 +40,12 @@
         <div class="col-xs-6" style="margin-top:5%">
             <form id="formularioausencia">
                 <div class="form-group">
-                    <input type="text" name="ausencia_id" class="form-control">
-                    <input type="hidden" name="worker_id" class="form-control trabajador_id">
+                    <input type="hidden" name="ausencia_id" id="ausencia_id" class="form-control">
+                    <input type="hidden" name="worker_id" id="wia" class="form-control trabajador_id">
                 </div>
                 <div class="form-group col-xs-6">
                         <label for="date">Fecha</label>
-                        <input type="text" name="date" class="form-control datepickerjs" id="fechaA">
+                        <input type="text" name="date" class="form-control datepickerjs" id="dateA">
                 </div>
 
                 <div class="form-group col-xs-6">
@@ -59,11 +59,11 @@
                 </div>            
                 
                 <div class="form-group col-xs-12">
-                    <input id="file" name="file" type="file" class="file">
+                    <input id="fileA" name="file" type="file" class="file">
                 </div>
 
                 <div class="checkbox col-xs-6">
-                    <label><input type="checkbox" name="justified" value="1">Falta Justificada </label>
+                    <label><input type="checkbox" name="justified" id="justifiedA" value="1">Falta Justificada </label>
                 </div>
 
                 <div class="form-group">

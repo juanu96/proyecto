@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}"> 
      <!-- File input -->
-    <link rel="stylesheet" href="{{ asset('public/css/fileinput.min.css') }}"> 
+    {{-- <link rel="stylesheet" href="{{ asset('public/css/fileinput.min.css') }}">  --}}
       
        
     @if(config('adminlte.plugins.select2'))

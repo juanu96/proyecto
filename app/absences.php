@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class absences extends Model
 {
+    use SoftDeletes;
+
     protected $table='absences';
     
     protected $primariKey='id';
@@ -22,7 +25,8 @@ class absences extends Model
     ];
 
     protected $dates = [
-        'date'         
+        'date',  
+        'deleted_at'         
     ];
 
     public function backup(){

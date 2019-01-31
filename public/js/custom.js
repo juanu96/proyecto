@@ -147,9 +147,10 @@
             $("#idemail").val(id);
             }
 
+            /* vinculamos la accion de eliminar ausencia */
             function deleteausencia() {
                 /* $(this).attr('data-id') obtenemos el id de el elemento que
-           queremeos eliminar a traves de la funcion bind */
+                 queremeos eliminar a traves de la funcion bind */
                var id = $(this).attr('data-id');
                var url = '/incidencias/' + id;//asignamos la url mas id que tiene que buscar para eliminar
                var res = delete_data(url);//a la funcion delete_data le mandamos la url para que ejecute el ajax y elimine
@@ -160,6 +161,43 @@
                    console.log(data);            
                }
            }
+
+           /* Vinculamos la accion de editar una asuencia */
+
+           function editausencia() {
+
+            $("#editarausencia").removeClass("hide");
+            $(".cancelar").removeClass("hide");
+            $("#guardarausencia").addClass("hide");
+            $(this).parents("tr").find("td:eq(1)").each(function(){
+                date=$(this).html();                
+            });
+            $(this).parents("tr").find("td:eq(2)").each(function(){
+                justif=$(this).html();                
+            });
+            $(this).parents("tr").find("td:eq(3)").each(function(){
+                quantity=$(this).html();                
+            });
+            $(this).parents("tr").find("td:eq(4)").each(function(){
+                observation=$(this).html();                
+            });
+            $(this).parents("tr").find("td:eq(5)").each(function(){
+                file=$(this).html();                
+            });
+            var id = $(this).attr('data-id');
+            $("#ausencia_id").val(id);        
+            $("#dateA").val(date);
+            if(justif == "Si"){
+                $("#justifiedA").attr('checked', true)
+            }else if(justif == "No"){
+                $("#justifiedA").attr('checked', false)
+            }            
+            $("#quantityA").val(quantity);
+            $("#observationA").val(observation);
+            $("#fileA").val(file);
+        }
+
+
     //-----------------------fin funciones Bind---------------------------------------------------------------------
 
     /* ----------------------Absences----------------------------------------------------------------------------- */
@@ -199,19 +237,20 @@
         
         var row = "<tr data-item='" + value.id + "'>+" +
             "<td class='abs-id'>" + value.id + "</td>" +
-            "<td class='abs_fecha'>" + value.date + "</td>" +
+            "<td class='abs_fecha'>" + value.fecha + "</td>" +
             "<td class='abs_justificado'>" + justif + "</td>" +
             "<td class='abs_horas'>" + value.quantity + "</td>" +
             "<td class='abs_comentario'>" + value.observation +
             "<td class='abs_respaldo'>" + file + "</td>" +
             '<td>'+
-            '<a href="#" class="glyphicon glyphicon-pencil" aria-hidden="true" name="editar" data-id="'+value.id+'"></a>'+
+            '<a href="#" class="glyphicon glyphicon-pencil editausencia" aria-hidden="true" name="editar" data-id="'+value.id+'" data-wi="'+value.worker_id+'"></a>'+
             '<a href="" data-toggle="modal"  class="glyphicon glyphicon-trash deleteausencia" aria-hidden="true" style="margin-left: 20px" data-id="'+value.id+'"></a>'+
             '</td>'+
             "</tr>";
             $("#tbodyausencia tr:last").after(row);
         });
         $(".deleteausencia").bind("click", deleteausencia);
+        $(".editausencia").bind("click", editausencia);
 
     });
 
@@ -229,7 +268,7 @@
             if (res !== null) {
 
                 var justif = null;
-            if (res.justified == 1) {
+            if (res.justified == "1") {
                 justif = 'Si';
             } else {
                 justif = 'No';
@@ -243,7 +282,7 @@
                 console.log(res);
                 var row = "<tr data-item='" + res.id + "'>" +
                 "<td class='abs-id'>" + res.id + "</td>" +
-                "<td class='abs_fecha'>" + res.date + "</td>" +
+                "<td class='abs_fecha'>" + res.fecha + "</td>" +
                 "<td class='abs_justificado'>" + justif + "</td>" +
                 "<td class='abs_horas'>" + res.quantity + "</td>" +
                 "<td class='abs_comentario'>" + res.observation +
@@ -254,9 +293,12 @@
                 '</td>'+
                 "</tr>";
                 $("#tbodyausencia tr:last").after(row);  
-                $("#formularioausencia").trigger("reset");                            
+                $("#formularioausencia").trigger("reset");
+                $(".editausencia").bind("click", editausencia);                            
                 $(".deleteausencia").bind("click", deleteausencia);
-                //$(".emailedit_1").bind("click", editemail); 
+                var a= $('#selectrabajador').val();
+                $('.trabajador_id').val(a);
+               
             }
         });
 
@@ -265,28 +307,57 @@
             e.preventDefault(); 
             
             var form = $('#formularioausencia');
-            var id = form.find($('#worker_id')).val();
-            console.log(id);
-            var date = form.find($('#fechaA'));
-            var description = form.find($('#descriptionAT'));
+            var id = form.find($('#ausencia_id')).val();
+            var date = form.find($('#dateA'));
+            var quantity = form.find($('#quantityA'));
+            var observation = form.find($('#observationA'));
+            var file = form.find($('#fileA'));
+            var justified = form.find($('#justifiedA').val());
+            var worker_id = form.find($('#wia'));
+            console.log(justified);
             var formData = {
                 _token: token,
                 date: date.val(),
-                description: description.val()
+                quantity: quantity.val(),
+                observation: observation.val(),
+                file: file.val(),
+                justified: justified.val(),
+                worker_id: worker_id.val()
             };
 
-            var url = '/work_area/' + id;
+            var url = '/incidencias/' + id;
             var type = "PUT";
             var res = post_form(formData, url, type);
             if (res !== null) {
-                var data = $('#tbodywa').find('tbody').find("tr[data-item='" + id + "']");
+            console.log(res.justified);
+                var justif = null;
+                if (res.justified == "1") {
+                    justif = 'Si';
+                } else {
+                    justif = 'No';
+                }
+                var file = null;
+                if (res.file == null) {
+                    file = '-';
+                } else {
+                    file = 'si';
+                }
+
+                var data = $('#tbodyausencia').find('tbody').find("tr[data-item='" + id + "']");
                 console.log(data);
-                $(data.find(".waname")).html(res.name);
-                $(data.find(".wadescription")).html(res.description);
-                $("#guardarAT").removeClass("hide");
-                $("#editarAT").addClass("hide");
+                $(data.find(".abs_fecha")).html(res.fecha);
+                $(data.find(".abs_justificado")).html(justif);
+                $(data.find(".abs_horas")).html(res.quantity);
+                $(data.find(".abs_comentario")).html(res.observation);
+                $(data.find(".abs_respaldo")).html(file);
+                $("#guardarausencia").removeClass("hide");
+                $("#editarausencia").addClass("hide");
                 $(".cancelar").addClass("hide");
-                $("#formularioAT").trigger("reset");      
+                $("#formularioausencia").trigger("reset");                          
+                
+
+                var a= $('#selectrabajador').val();
+                $('.trabajador_id').val(a);
             }
                     
             });
@@ -833,31 +904,8 @@ $(function() {
                  
     });
 
-    $(".editausencia").click(function(){
-        $("#editarausencia").removeClass("hide");
-        $(".cancelar").removeClass("hide");
-        $("#guardarausencia").addClass("hide"); 
-        $(this).parents("tr").find("td:eq(0)").each(function(){
-            id=$(this).html();                
-        });
-        $(this).parents("tr").find("td:eq(1)").each(function(){
-            date=$(this).html();                
-        });
-        $(this).parents("tr").find("td:eq(2)").each(function(){
-            justif=$(this).html();                
-        });
-        $(this).parents("tr").find("td:eq(3)").each(function(){
-            quantity=$(this).html();                
-        });
-        $(this).parents("tr").find("td:eq(4)").each(function(){
-            observation=$(this).html();                
-        });
-        $(this).parents("tr").find("td:eq(5)").each(function(){
-            file=$(this).html();                
-        });
-        var id = $(this).attr('data-id');
-        $("#email").val(email);        
-        $("#idemail").val(id);
+   
+        
     
 
     
@@ -1036,8 +1084,5 @@ $("#"+clickID).bind("click",delRow);
 function delRow() {
 // Funcion que destruye el elemento actual una vez echo el click
 $(this).parent('div').remove();}
-//-*------------------------------------------------------------------------------
-
- 
  
  
